@@ -11,10 +11,12 @@ import { MMKV } from 'react-native-mmkv';
 
 import { Deck } from '../features/deck/Deck';
 import { useDeck } from '../features/deck/use-deck';
+import { useLang } from '../lib/lang';
 import { createReviewStore, REVIEW_STORE_ID } from '../lib/review-store';
 import { filterReviewQuestions } from '../lib/review-filter';
 
 export function ReviewScreen() {
+  const { lang } = useLang();
   const { questions, isLoading, error } = useDeck('practice');
 
   // Read once per mount: the review set only grows while swiping in `PracticeScreen`, a
@@ -64,7 +66,7 @@ export function ReviewScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <Deck questions={reviewQuestions} lang="fr" />
+      <Deck questions={reviewQuestions} lang={lang} />
     </SafeAreaView>
   );
 }

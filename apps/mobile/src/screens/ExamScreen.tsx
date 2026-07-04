@@ -10,9 +10,11 @@ import { SafeAreaView, Text, View } from 'react-native';
 
 import { Deck } from '../features/deck/Deck';
 import { useDeck } from '../features/deck/use-deck';
+import { useLang } from '../lib/lang';
 import { initialScore, recordAnswer, scoreSummary, type ScoreState } from '../lib/score';
 
 export function ExamScreen() {
+  const { lang } = useLang();
   const { questions, isLoading, error } = useDeck('exam');
   const [score, setScore] = useState<ScoreState>(initialScore());
   const [finished, setFinished] = useState(false);
@@ -76,7 +78,7 @@ export function ExamScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <Deck questions={questions} lang="fr" onAnswered={handleAnswered} onComplete={handleComplete} />
+      <Deck questions={questions} lang={lang} onAnswered={handleAnswered} onComplete={handleComplete} />
     </SafeAreaView>
   );
 }

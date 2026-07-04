@@ -4,16 +4,20 @@
 // this screen just handles loading/error/empty and hands the questions to `Deck` (Task 3's
 // swipe UI). The review set (questions swiped left) is persisted to a dedicated `MMKV` instance
 // via `review-store.ts`'s `KeyValueStorage`-backed store — Task 4's `ReviewScreen` reads the same
-// ids back out. Language is hardcoded to `fr` here; Task 5 adds the fr/ar toggle.
+// ids back out. Task 5: `lang` comes from the app-wide `useLang()` context (toggled in
+// `HomeScreen`'s header), not hardcoded — `Deck`/`QuestionCard` already re-derive their media URLs
+// whenever the `lang` prop changes.
 import { useMemo } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 import { MMKV } from 'react-native-mmkv';
 
 import { Deck } from '../features/deck/Deck';
 import { useDeck } from '../features/deck/use-deck';
+import { useLang } from '../lib/lang';
 import { createReviewStore, REVIEW_STORE_ID } from '../lib/review-store';
 
 export function PracticeScreen() {
+  const { lang } = useLang();
   const { questions, isLoading, error } = useDeck('practice');
   // `reviewStore` is a write-through persister, not screen state: this screen only appends ids as
   // the deck is swiped left; Task 4's ReviewScreen is what reads the accumulated set back out.
@@ -59,7 +63,7 @@ export function PracticeScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <Deck questions={questions} lang="fr" onReview={addToReview} />
+      <Deck questions={questions} lang={lang} onReview={addToReview} />
     </SafeAreaView>
   );
 }
