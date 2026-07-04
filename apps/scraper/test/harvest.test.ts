@@ -37,6 +37,8 @@ const fakeRepo = (store: Map<string, Question>) =>
   Layer.succeed(QuestionRepository, {
     upsertQuestion: (q: Question) => Effect.sync(() => { store.set(q.id, q); }),
     questionsByCategory: () => Effect.succeed([...store.values()]),
+    allQuestions: () => Effect.succeed([...store.values()]),
+    randomQuestions: (n: number) => Effect.succeed([...store.values()].slice(0, n)),
   });
 
 test('harvest collects all unique questions and stops after dry rounds', async () => {
