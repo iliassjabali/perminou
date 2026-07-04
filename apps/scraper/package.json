@@ -9,6 +9,7 @@
     "cheerio": "^1.2.0",
     "dotenv": "^17.4.2",
     "effect": "^3.14.0",
+    "got": "^14.4.5",
     "playwright": "^1.61.1"
   },
   "scripts": {
