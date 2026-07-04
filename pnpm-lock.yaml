@@ -24,6 +24,40 @@ importers:
         specifier: ^2.1.0
         version: 2.1.9(@types/node@26.1.0)(lightningcss@1.32.0)(terser@5.48.0)
 
+  apps/backend:
+    dependencies:
+      '@effect/platform':
+        specifier: ^0.96.1
+        version: 0.96.2(effect@3.21.4)
+      '@effect/rpc':
+        specifier: ^0.75.1
+        version: 0.75.1(@effect/platform@0.96.2(effect@3.21.4))(effect@3.21.4)
+      '@hono/node-server':
+        specifier: ^2.0.8
+        version: 2.0.8(hono@4.12.27)
+      '@perminou/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@perminou/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
+      '@perminou/rpc-contract':
+        specifier: workspace:*
+        version: link:../../packages/rpc-contract
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
+      effect:
+        specifier: ^3.14.0
+        version: 3.21.4
+      hono:
+        specifier: ^4.12.27
+        version: 4.12.27
+    devDependencies:
+      tsx:
+        specifier: ^4.23.0
+        version: 4.23.0
+
   apps/mobile:
     dependencies:
       '@expo/metro-runtime':
@@ -1376,6 +1410,12 @@ packages:
     resolution: {integrity: sha512-wtF6h+DY6M3YaDBPAmvuuA6jV8Sif9MjtOI5euKFWRgCDl5PeDpPsHR9u2l6St5ceY8AZgoNDww5+HvEsXFsGg==}
     engines: {node: '>=6'}
     hasBin: true
+
+  '@hono/node-server@2.0.8':
+    resolution: {integrity: sha512-GuCWzLxwg218fy1JaHculFsdcuY12hxit83V+algozTPnwhNjLrRL/Alg9OYjLZLoUZ1rw/S4CdTMsnkSKCmFA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      hono: ^4
 
   '@inquirer/external-editor@1.0.3':
     resolution: {integrity: sha512-RWbSrDiYmO4LbejWY7ttpxczuwQyZLBUyygsA9Nsv95hpzUWwnNTVQmAq3xuh7vNwCp07UTmE5i11XAEExx4RA==}
@@ -2976,6 +3016,10 @@ packages:
   homedir-polyfill@1.0.3:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}
     engines: {node: '>=0.10.0'}
+
+  hono@4.12.27:
+    resolution: {integrity: sha512-1yrb/+w6HWQJrUCLkJ2IF5jNIPvvFkblV5RNOYl6bV+OA6p9GLcMpHFFGTosSvHvcAUibuUukRqhlYI4z32C7Q==}
+    engines: {node: '>=16.9.0'}
 
   hosted-git-info@7.0.2:
     resolution: {integrity: sha512-puUZAUKT5m8Zzvs72XWy3HtvVbTWljRE66cP60bxJzAqf2DgICo7lYTY2IHUmLnNpjYvw5bvmoHvPc0QO2a62w==}
@@ -5906,6 +5950,10 @@ snapshots:
       protobufjs: 7.6.5
       yargs: 17.7.3
 
+  '@hono/node-server@2.0.8(hono@4.12.27)':
+    dependencies:
+      hono: 4.12.27
+
   '@inquirer/external-editor@1.0.3(@types/node@26.1.0)':
     dependencies:
       chardet: 2.2.0
@@ -7574,6 +7622,8 @@ snapshots:
   homedir-polyfill@1.0.3:
     dependencies:
       parse-passwd: 1.0.0
+
+  hono@4.12.27: {}
 
   hosted-git-info@7.0.2:
     dependencies:

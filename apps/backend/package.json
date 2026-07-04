@@ -1,0 +1,27 @@
+{
+  "name": "@perminou/backend",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/main.ts",
+  "types": "src/main.ts",
+  "dependencies": {
+    "@perminou/db": "workspace:*",
+    "@perminou/domain": "workspace:*",
+    "@perminou/rpc-contract": "workspace:*",
+    "@effect/platform": "^0.96.1",
+    "@effect/rpc": "^0.75.1",
+    "@hono/node-server": "^2.0.8",
+    "dotenv": "^17.4.2",
+    "effect": "^3.14.0",
+    "hono": "^4.12.27"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "dev": "tsx src/main.ts",
+    "start": "tsx src/main.ts"
+  },
+  "private": true,
+  "devDependencies": {
+    "tsx": "^4.23.0"
+  }
+}
