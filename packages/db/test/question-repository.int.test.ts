@@ -34,5 +34,5 @@ test('upsert then read back a question with answers', async () => {
   });
   const rows = await Effect.runPromise(program.pipe(Effect.provide(QuestionRepositoryLive(uri))));
   expect(rows).toHaveLength(1);
-  expect(rows[0].answers.filter((a) => a.correct)).toHaveLength(1);
+  expect(rows[0]!.answers.filter((a) => a.correct)).toHaveLength(1);
 });
