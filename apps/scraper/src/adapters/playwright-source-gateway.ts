@@ -107,6 +107,7 @@ const make = Effect.gen(function* () {
           }
           await page.locator('input[value="Valider"]').first().click();
           await page.waitForLoadState('domcontentloaded');
+          await new Promise((r) => setTimeout(r, 350)); // gentle: don't hammer the gov service
         },
         catch: (cause) => new FetchError({ url: EXAM_URL, cause }),
       });

@@ -4,7 +4,7 @@
 // and asserts the exam markup still yields a well-shaped question. It is designed to
 // FAIL LOUDLY when NARSA changes their HTML — a red drift test means "re-record the
 // fixtures and re-check the parsers", not "the build is broken".
-import 'dotenv/config';
+import '../src/load-env';
 import { test, expect } from 'vitest';
 import { Effect } from 'effect';
 import { SourceGateway } from '../src/domain/ports/source-gateway';

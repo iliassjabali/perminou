@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import './load-env';
 import { Layer, ManagedRuntime } from 'effect';
 import { QuestionRepositoryLive } from '@perminou/db';
 import { PlaywrightSourceGatewayLive } from './adapters/playwright-source-gateway';
