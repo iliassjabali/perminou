@@ -1,3 +1,8 @@
+// `react-native-gesture-handler` MUST be imported first, before anything else, on every entry
+// point (its own docs/setup requirement) — it installs a native event-handling shim that other
+// gesture-dependent code (Plan 4 Task 3's `Deck.tsx`) relies on at import time.
+import 'react-native-gesture-handler';
+
 // Hermes polyfills — MUST be the first thing evaluated, before any other import (including
 // `expo`/`App`). `@effect/rpc`'s client (via `@perminou/rpc-react`) reads `crypto.getRandomValues`
 // at module-eval time; Hermes on RN 0.86 doesn't provide it, so importing the polyfill any later
