@@ -14,9 +14,9 @@ A **mobile app for practicing the Moroccan driving-license theory exam** (*code 
 
 - **Paradigm:** TypeScript, **all-in on Effect** (backend + scraper + domain; no NestJS) — Effect implements hexagonal architecture (`Context.Tag` = port, `Layer` = adapter, `R` channel enforces the dependency rule at compile time).
 - **Runtime:** **Node** throughout. No Bun.
-- **HTTP host:** **Hono** serving the **tRPC** router. Effect-backed resolvers via `ManagedRuntime`.
-- **API + client data:** **tRPC + `@tanstack/react-query`**. (Not `@effect/rpc` — react-query's caching/persistence is the point; see ADR 0007.)
-- **Validation:** Effect **Schema** (not Zod). Works as a tRPC input validator via `Schema.standardSchemaV1`.
+- **HTTP host:** **Hono** serving the **`@effect/rpc`** handlers (`RpcServer`). No tRPC.
+- **API + client data:** **`@effect/rpc`** on the wire (typed errors end-to-end) + a **custom `rpc-react`** library exposing a typed `api` proxy over `@tanstack/react-query` (tRPC-style DX, one import). App never imports `@effect/rpc` directly. See ADR 0007.
+- **Validation:** Effect **Schema** (not Zod). Used for domain entities and `@effect/rpc` payload/success/error.
 - **ORM:** **Drizzle** on Postgres via **`@effect/sql-drizzle`** (queries run as Effects); migrations via **`drizzle-kit`**. The `pgTable` schema is defined once in `packages/db` and shared by scraper (writes) and backend (reads). NOT Prisma.
 - **Mobile:** **Expo** + **NativeWind** (Tailwind for RN) + **React Native Reusables** (shadcn-for-RN). react-query **persisted cache** (MMKV) + **`expo-image`** disk cache for offline capability.
 - **Data:** scraper = **Playwright (auth) + HTTP bulk (got/cheerio)** → **Postgres**; images → object storage/CDN (stored as URLs).
@@ -29,17 +29,18 @@ A **mobile app for practicing the Moroccan driving-license theory exam** (*code 
 packages/
   domain/        # entities + Effect Schema + ports (Tags). Pure — no I/O libs.
   db/            # shared Drizzle pgTable schema + drizzle-kit migrations (scraper writes, backend reads)
-  api-contract/  # exported tRPC AppRouter type; mobile imports it (no codegen)
+  rpc-contract/  # @effect/rpc RpcGroup defs (Effect Schema) — shared by backend + mobile
+  rpc-react/     # custom lib: typed `api` proxy (react-query hooks) over the @effect/rpc client
 apps/
   scraper/       # hybrid crawler → writes the question bank into Postgres (Effect)
-  backend/       # Effect + Hono + tRPC API serving the bank from Postgres
+  backend/       # Effect + Hono; serves @effect/rpc handlers from Postgres
   mobile/        # Expo online app; persisted react-query cache = offline capability
 docs/adr/        # architecture decision records
 ```
 
 ## Non-negotiable rules
 
-1. **Dependency rule.** `packages/domain` imports no I/O library (Playwright, pg, tRPC, expo). Adapters depend on the domain, never the reverse. A use-case declares its ports in its `R` channel.
+1. **Dependency rule.** `packages/domain` imports no I/O library (Playwright, pg, `@effect/rpc`, expo). Adapters depend on the domain, never the reverse. A use-case declares its ports in its `R` channel.
 2. **Tests never hit live NARSA.** The site is quarantined behind the `SourceGateway` port and fed recorded fixtures. The only live-touching check is the opt-in **drift test** (not in `pnpm test`).
 3. **Scraper is gentle & resilient.** Bounded concurrency + backoff (`Schedule`), resource-safe browsers (`Scope`), resumable/idempotent, fail-loud typed errors, **survives session expiry** (re-auth on redirect-to-signin).
 4. **Offline capability = cache, not bundle.** The app is online; react-query persistence + a first-launch prefetch provide offline use of already-fetched content. Do not reintroduce an on-device dataset/bundle without an ADR.
@@ -59,11 +60,11 @@ pnpm --filter mobile start    # Expo dev server
 
 ## Skills for this repo (`.claude/skills/`)
 
-- **perminou-effect** — Tag/Layer/typed-errors, Schedule, Scope, Schema, tRPC bridge. Read first for any Effect code.
-- **perminou-architecture** — monorepo layout, ports & adapters, online API + cached client.
+- **perminou-effect** — Tag/Layer/typed-errors, Schedule, Scope, Schema, @effect/rpc bridge. Read first for any Effect code.
+- **perminou-architecture** — monorepo layout, ports & adapters, online @effect/rpc API + rpc-react client.
 - **perminou-scraping** — hybrid engine, `SourceGateway`, session re-auth, fixtures, drift test.
-- **perminou-testing** — Vitest, test Layers, Testcontainers, tRPC caller.
-- **perminou-mobile-ui** — Expo + NativeWind + RNR, tRPC + react-query persisted cache, offline-via-cache.
+- **perminou-testing** — Vitest, test Layers, Testcontainers, @effect/rpc handler tests.
+- **perminou-mobile-ui** — Expo + NativeWind + RNR, rpc-react persisted cache, offline-via-cache.
 
 ## Workflow
 

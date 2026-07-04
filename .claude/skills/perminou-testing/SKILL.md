@@ -1,6 +1,6 @@
 ---
 name: perminou-testing
-description: Use when writing or reviewing any test in the Perminou monorepo, choosing a test layer, or setting up Vitest, Testcontainers, or tRPC contract tests. Covers the per-layer strategy, the "tests never hit live NARSA" fixture-quarantine rule, providing Effect test Layers instead of mocks, Testcontainers Postgres for outbound adapters, tRPC caller contract tests, and TDD red-green-refactor. Applies to scraper, backend, and mobile.
+description: Use when writing or reviewing any test in the Perminou monorepo, choosing a test layer, or setting up Vitest, Testcontainers, or @effect/rpc handler tests. Covers the per-layer strategy, the "tests never hit live NARSA" fixture-quarantine rule, providing Effect test Layers instead of mocks, Testcontainers Postgres for outbound adapters, @effect/rpc handler contract tests, and TDD red-green-refactor. Applies to scraper, backend, and mobile.
 ---
 
 # Perminou Testing
@@ -20,9 +20,9 @@ description: Use when writing or reviewing any test in the Perminou monorepo, ch
 | `apps/scraper` | source drift | opt-in drift test, manual/nightly, fails loud | yes (isolated) |
 | `apps/backend` | domain + use-cases | pure Vitest, provide fake port `Layer`s | no |
 | `apps/backend` | repo/storage adapters | **Testcontainers Postgres** + migrations | ephemeral DB |
-| `apps/backend` | tRPC router | `createCaller` contract test | ephemeral DB |
-| `apps/mobile` | logic/hooks, cached queries | Vitest + RN Testing Library, mocked tRPC + react-query | no |
-| `apps/mobile` | server contract | **compile-time** via shared `AppRouter` type | n/a |
+| `apps/backend` | @effect/rpc handlers | call the handler `Layer` directly | ephemeral DB |
+| `apps/mobile` | logic/hooks, cached queries | Vitest + RN Testing Library, mocked rpc-react | no |
+| `apps/mobile` | server contract | **compile-time** via shared `rpc-contract` types | n/a |
 
 ## The one rule that matters most
 
@@ -81,20 +81,30 @@ test('findLatest returns the highest version number', async () => {
 });
 ```
 
-## Example — tRPC contract test with createCaller
+## Example — @effect/rpc handler test (no HTTP, real DB)
 
 ```ts
-// apps/backend/test/dataset.router.contract.test.ts
-import { datasetRouter } from '../src/dataset/adapters/inbound/dataset.router';
+// apps/backend/test/catalog.handlers.test.ts (Vitest)
+import { Effect, Layer } from 'effect';
+import { getChapterQuestions } from '../src/catalog/application/get-chapter-questions';
 
-test('dataset.getManifest returns a schema-valid manifest', async () => {
-  const caller = datasetRouter.createCaller({});   // router runs the Effect use-case via its runtime
-  const manifest = await caller.getManifest();
-  await expect(Effect.runPromise(Schema.decodeUnknown(DatasetManifest)(manifest))).resolves.toBeDefined();
+test('ChapterQuestions returns a chapter's questions', async () => {
+  const program = getChapterQuestions(chapterId).pipe(
+    Effect.provide(QuestionRepositoryLive(container.getConnectionUri())),
+  );
+  const questions = await Effect.runPromise(program);
+  expect(questions.length).toBeGreaterThan(0);
+});
+
+test('ChapterQuestions fails typed when the chapter is missing', async () => {
+  const exit = await Effect.runPromiseExit(
+    getChapterQuestions(missingId).pipe(Effect.provide(QuestionRepositoryTest)),
+  );
+  expect(exit._tag).toBe('Failure');   // ChapterNotFound in the E channel
 });
 ```
 
-The **mobile** side needs no runtime contract test: importing `AppRouter` from `packages/api-contract` makes a server/client mismatch a **typecheck failure**.
+Test the **use-case Effect** directly (that's where the logic is); the `@effect/rpc` handler is a one-line delegate, so an HTTP round-trip test adds little. The **mobile** side needs no runtime contract test: the shared `rpc-contract` `RpcGroup` types the client, so a server/client mismatch is a **typecheck failure**.
 
 ## TDD red-green-refactor here
 
@@ -107,7 +117,7 @@ The **mobile** side needs no runtime contract test: importing `AppRouter` from `
 - **Reaching the network in a unit test.** Wrong seam — provide a fixture `Layer`.
 - **Mocking the DB.** Don't. Use a real ephemeral Postgres via Testcontainers; mocks hide SQL/migration bugs.
 - **Mocking Effect services by hand.** Provide a `Layer.succeed(Tag, impl)` instead — same seam the app uses.
-- **Writing a mobile "contract test" that re-declares server types.** The shared `AppRouter` guarantees it at compile time.
+- **Writing a mobile "contract test" that re-declares server types.** The shared `rpc-contract` `RpcGroup` guarantees it at compile time.
 - **Putting the drift test in `pnpm test`.** It's opt-in and allowed to fail; keep it out of the default suite.
 - **Asserting on incidental HTML.** Assert on extracted domain values, not on markup that changes.
 

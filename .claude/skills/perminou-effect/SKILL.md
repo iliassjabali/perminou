@@ -1,6 +1,6 @@
 ---
 name: perminou-effect
-description: Use when writing or reviewing any Effect code in the Perminou monorepo (scraper, backend, domain) — defining ports/adapters as Context.Tag + Layer, modeling typed errors with Data.TaggedError, retry/backoff with Schedule, resource safety with Scope, bounded concurrency, Effect Schema validation, or bridging Effect to the tRPC edge via ManagedRuntime. Applies whenever you see Effect<A, E, R>, Layer, Context.Tag, or a "which layer provides this" question.
+description: Use when writing or reviewing any Effect code in the Perminou monorepo (scraper, backend, domain) — defining ports/adapters as Context.Tag + Layer, modeling typed errors with Data.TaggedError, retry/backoff with Schedule, resource safety with Scope, bounded concurrency, Effect Schema validation, or wiring @effect/rpc handlers/clients. Applies whenever you see Effect<A, E, R>, Layer, Context.Tag, or a "which layer provides this" question.
 ---
 
 # Perminou Effect Patterns
@@ -97,27 +97,28 @@ export type Question = Schema.Schema.Type<typeof Question>;
 const parse = Schema.decodeUnknown(Question);
 ```
 
-## Bridging to the tRPC edge
+## The @effect/rpc edge
 
-The tRPC router is a **thin inbound adapter**. It runs an Effect use-case through a `ManagedRuntime` (built once from the app's `MainLayer`) and maps the typed-error channel to tRPC errors.
+The RPC layer is native Effect (no tRPC). RPCs are defined once in `packages/rpc-contract` as an `RpcGroup` with Effect Schema payload/success/**error** — so **typed errors travel over the wire**. Handlers are a **thin inbound adapter**: each returns the Effect use-case directly, no `ManagedRuntime.runPromise` boilerplate per procedure.
 
 ```ts
-const runtime = ManagedRuntime.make(MainLayer);   // MainLayer provides every port
+// packages/rpc-contract — shared by server + client
+export class CatalogRpcs extends RpcGroup.make(
+  Rpc.make('ChapterQuestions', {
+    payload: { chapterId: ChapterIdSchema },
+    success: Schema.Array(Question),
+    error: ChapterNotFound,                 // ← flows to the client typed, not flattened
+  }),
+) {}
 
-export const catalogRouter = t.router({
-  chapterQuestions: t.procedure
-    .input(Schema.standardSchemaV1(ChapterIdSchema))   // Effect Schema as tRPC validator
-    .query(({ input }) =>
-      runtime.runPromise(
-        getChapterQuestions(input).pipe(
-          Effect.catchTag('ChapterNotFound', () =>
-            Effect.fail(new TRPCError({ code: 'NOT_FOUND' })),
-          ),
-        ),
-      ),
-    ),
+// apps/backend — handlers as a Layer; each is just the use-case Effect
+export const CatalogHandlersLive = CatalogRpcs.toLayer({
+  ChapterQuestions: ({ chapterId }) => getChapterQuestions(chapterId),
 });
+// served over Hono: RpcServer.layer(CatalogRpcs) + RpcServer.layerProtocolHttp + RpcSerialization.layerJson
 ```
+
+The mobile client (`packages/rpc-react`) wraps the `RpcClient` in react-query hooks — see `perminou-mobile-ui`. `@effect/rpc` is `0.x`/pre-v4; keep its churn inside `rpc-contract`/`rpc-react`.
 
 ## Common mistakes
 
