@@ -150,6 +150,21 @@ importers:
         specifier: ^3.14.0
         version: 3.21.4
 
+  packages/rpc-contract:
+    dependencies:
+      '@effect/platform':
+        specifier: ^0.96.1
+        version: 0.96.2(effect@3.21.4)
+      '@effect/rpc':
+        specifier: ^0.75.1
+        version: 0.75.1(@effect/platform@0.96.2(effect@3.21.4))(effect@3.21.4)
+      '@perminou/domain':
+        specifier: workspace:*
+        version: link:../domain
+      effect:
+        specifier: ^3.14.0
+        version: 3.21.4
+
 packages:
 
   '@alloc/quick-lru@5.2.0':
@@ -570,6 +585,17 @@ packages:
     resolution: {integrity: sha512-Ttw8OhbcP1x5cPgcX4VdnDSWrskVdUrf9bO3eDd++TTcQzEiYVu9GZJaSMvz6Yqzfzt+1tIKoKi2jp6dLdJ9dg==}
     peerDependencies:
       effect: ^3.11.10
+
+  '@effect/platform@0.96.2':
+    resolution: {integrity: sha512-oJm3UztdzZvK7BXkFSV3IdyGuqQrhLmViG/hMDZh99ski7aADesNuv19z4R0heH3bAXnSt/Nb8O9KJQ886C0Tg==}
+    peerDependencies:
+      effect: ^3.21.4
+
+  '@effect/rpc@0.75.1':
+    resolution: {integrity: sha512-8yxF8+mMGGEbF8BUCp34HjdJj7CvTpGeZxBcpsDF6v7zPiGbJL1UDLzA8ZqYjmcngBHhPecbmeONTk/LiLAaEg==}
+    peerDependencies:
+      '@effect/platform': ^0.96.1
+      effect: ^3.21.2
 
   '@effect/sql-drizzle@0.24.2':
     resolution: {integrity: sha512-tZaQVpp1OL+gUdPDQJ5GYhDlhXUK5p/FtnAbDYgz9hUGZ2aTGX7KeJgFmIMM9kex7sxTofLvziZCkao6UaIKUQ==}
@@ -5169,6 +5195,19 @@ snapshots:
       effect: 3.21.4
       find-my-way-ts: 0.1.6
       multipasta: 0.2.7
+
+  '@effect/platform@0.96.2(effect@3.21.4)':
+    dependencies:
+      effect: 3.21.4
+      find-my-way-ts: 0.1.6
+      msgpackr: 1.12.1
+      multipasta: 0.2.7
+
+  '@effect/rpc@0.75.1(@effect/platform@0.96.2(effect@3.21.4))(effect@3.21.4)':
+    dependencies:
+      '@effect/platform': 0.96.2(effect@3.21.4)
+      effect: 3.21.4
+      msgpackr: 1.12.1
 
   '@effect/sql-drizzle@0.24.2(@effect/sql@0.24.3(@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)(ws@8.21.0))(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(drizzle-orm@0.36.4(@types/react@19.2.17)(postgres@3.4.9)(react@19.2.3))(effect@3.21.4)':
     dependencies:

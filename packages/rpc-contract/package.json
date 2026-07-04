@@ -1,0 +1,7 @@
+{ "name": "@perminou/rpc-contract", "version": "0.0.0", "type": "module",
+  "main": "src/index.ts", "types": "src/index.ts",
+  "dependencies": {
+    "@perminou/domain": "workspace:*", "effect": "^3.14.0",
+    "@effect/rpc": "^0.75.1", "@effect/platform": "^0.96.1"
+  },
+  "scripts": { "typecheck": "tsc --noEmit" } }
