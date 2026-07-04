@@ -9,7 +9,8 @@
 ## Spike findings (confirmed)
 
 - **No API.** No JSON endpoint; a guessed per-question route returns 404. Content is server-rendered HTML only.
-- **Question model:** each question has a **numeric ID**. The prompt and answer *meaning* live in an **image** (`.png`) and/or **audio** (`.mp3`); the on-page "answers" are **numbered checkboxes (2–4, multi-select)** with their own DB IDs. A question may be image-only (146), image+audio (565), or audio-only (800).
+- **Question model:** each question has an **ID** — mostly numeric, but **~10% are alphanumeric** (`IS014`, `ISR001` — the signage sub-bank), so `QuestionId` is modeled as a **string**. The prompt and answer *meaning* live in an **image** (`.png`/`.gif`) and/or **audio** (`.mp3`); the on-page "answers" are **numbered checkboxes (2–4, multi-select)** with their own DB IDs. A question may be image-only (146), image+audio (565), or audio-only (800).
+- **Correction format** (Task-5 capture): the end-of-exam page has one `div#questionModal_N` per slot with `img#modalQuestionImage_N` (→ the question id via its media URL) and, per correct answer, a `div.modal-answer > div.fw-bold1` reading `"<index>: C'est la bonne réponse"`. **Correctness is by 1-based index (on-page position), never by the answer's DB id** — so downstream joins correctness on `index`.
 - **Media is PUBLIC** (no auth): `/media/uploads/questions/{images|son}/{fr|ar}/{id}.{png|mp3}`, per language, ~0.5 MB images / ~0.2 MB audio. IDs are **sparse** (not every integer is a question).
 - **Correct answers are NOT in the DOM.** They're revealed only by completing the exam (submit each with "Valider", then the correction). Exact correction markup → captured in Plan 5 with Playwright.
 - **No deterministic listing.** The per-chapter links are broken (raw Django URL-regex leaks into `href`). The only enumerator is **Examen Blanc**: 1 random question per load, 40 per exam, "Valider" POSTs to advance.
