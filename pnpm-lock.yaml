@@ -84,6 +84,9 @@ importers:
 
   apps/scraper:
     dependencies:
+      '@perminou/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@perminou/domain':
         specifier: workspace:*
         version: link:../../packages/domain
