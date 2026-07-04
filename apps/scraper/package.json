@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit",
     "capture-fixtures": "tsx scripts/capture-fixtures.ts",
     "scrape": "tsx src/main.ts",
+    "db:migrate": "tsx scripts/migrate.ts",
     "drift": "vitest run --config vitest.drift.config.ts"
   },
   "private": true,
