@@ -16,14 +16,21 @@ export function AnswerOption({
   checked,
   state,
   onPress,
+  testID,
 }: {
   label: string;
   checked: boolean;
   state: AnswerOptionState;
   onPress: () => void;
+  testID?: string;
 }) {
+  // Suffixing `testID` with `state` (idle/correct/wrong) gives tests a stable, style-independent
+  // hook into the reveal outcome — NativeWind's `className` -> real styles transform only runs
+  // via the Babel/Metro pipeline, so component tests (which run under plain Vitest/jsdom, no
+  // Metro) can't assert on it directly.
   return (
     <Pressable
+      testID={testID ? `${testID}-${state}` : undefined}
       onPress={onPress}
       className={cx(
         'flex-row items-center rounded-2xl border p-4 mb-3 active:opacity-80',
