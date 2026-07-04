@@ -1,0 +1,14 @@
+# Never commit live-site captures, credentials, or Playwright artifacts.
+.env
+.env.*
+!.env.example
+screenshots/
+videos/
+traces/
+test-results/
+playwright-report/
+*.png
+*.jpg
+*.jpeg
+*.webm
+*.zip

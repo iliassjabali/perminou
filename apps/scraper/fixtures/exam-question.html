@@ -1,0 +1,1407 @@
+<html lang="en" dir="ltr"><head>
+    <!-- Path to manifest.json -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- Add to homescreen for Chrome on Android -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="MyApp">
+
+
+<!-- Chrome for Android theme color -->
+<meta name="theme-color" content="#000">
+
+<!-- Add to homescreen for Safari on iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MyApp">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-72x72.png" sizes="72x72">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-96x96.png" sizes="96x96">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-128x128.png" sizes="128x128">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-144x144.png" sizes="144x144">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-152x152.png" sizes="152x152">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-192x192.png" sizes="192x192">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-384x384.png" sizes="384x384">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-512x512.png" sizes="512x512">
+    
+
+
+
+
+<link href="/static/images/icons/splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1242x2208.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1536x2048.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1668x2224.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1668x2388.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+
+
+<!-- Tile for Win8 -->
+<meta name="msapplication-TileColor" content="#fff">
+
+<meta name="msapplication-TileImage" content="/static/images/icons/icon-512x512.png">
+
+
+<link rel="icon" sizes="512x512" href="/static/images/icons/icon-512x512.png">
+
+
+<script type="text/javascript">
+    // Initialize the service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/serviceworker.js', {
+            scope: '/'
+        }).then(function (registration) {
+            // Registration was successful
+            
+            console.log('django-pwa: ServiceWorker registration successful with scope: ', registration.scope);
+            
+        }, function (err) {
+            // registration failed :(
+            
+            console.log('django-pwa: ServiceWorker registration failed: ', err);
+            
+        });
+    }
+</script>
+
+    <script>(function() {var w = window,s = w.localStorage,at=Date.now()+Math.max(1799.987104,0)*1000+999;w.addEventListener('load', function() {s['djalLogoutAt'] = at;function upd() {if (s['djalLogoutAt'] > at) {at = s['djalLogoutAt'];setTimeout(upd, at - Date.now());}else {delete s['djalLogoutAt'];w.location.reload();}}setTimeout(upd, at - Date.now());});})();</script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title> Examen_Blanc </title>
+    <meta name="description" content="NARSA Online Learning Platform">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/static/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/static/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/static/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/static/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/static/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/static/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/static/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/favicon/manifest.json" crossorigin="use-credentials">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/static/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+
+    <link rel="stylesheet" href="/static/vendors/simplebar-6.2.5/css/simplebar.css">
+    <link rel="stylesheet" href="/static/vendors/simplebar-6.2.5/custom/simplebar.css">
+
+
+    <link rel="stylesheet" href="/static/vendors/%40coreui/coreui-4.2.6/css/style.css">
+    <link rel="stylesheet" href="/static/vendors/%40coreui/icons-3.0.1/css/free.min.css">
+    <link href="/static/vendors/Buttons-2.4.2/css/buttons.bootstrap5.css" rel="stylesheet">
+    <link href="/static/vendors/Select-1.7.0/css/select.bootstrap5.css" rel="stylesheet">
+
+    <script>
+        function disableRightClick(event) {
+            event.preventDefault();
+        }
+
+        document.addEventListener('contextmenu', disableRightClick);
+    </script>
+
+
+
+
+
+    <link href="/static/vendors/bootstrap-icons-1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/vendors/DataTables-1.13.6/css/dataTables.bootstrap5.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/assets/custom.css">
+
+
+
+
+
+    <link rel="stylesheet" href="/static/vendors/fontawesome-free-6.4.2-web/css/all.css">
+    <link rel="stylesheet" href="/static/assets/css/site.css">
+    
+
+    
+
+    <!-- Specific Page CSS goes HERE  -->
+    
+    <style>
+        .nbr{
+
+
+            padding-top:10px;
+            width:80px;
+            height:70px;
+            border: 1px solid #dadce0;
+            border-radius: 50px 50px;
+            color:#ffe800;
+            background-color:#3d61ad;
+            font-size: 40px;
+            cursor: pointer;
+        }
+        .rep{
+            width:250px;
+            height:720px;
+
+
+        }
+        ._ch{
+            padding-top:10px;
+            width:40px;
+            height:50px;
+            border: 1px solid #3d61ad;
+
+            background-color: #d1d0d7;
+            font-size: 20px;
+            color:#ffffff;
+            font-weight: bold;
+
+            margin-top:5px;
+            margin-bottom:5px;
+
+            border-style: solid;
+            border-width: 1px;
+            border-radius: 3px;
+            box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+            box-sizing: border-box;
+
+        }
+        .choix{
+            width:210px;
+            padding-left:10px;
+            padding-right:10px;
+            background-color: #8888aa;
+            border: 2px solid #585975;
+            border-radius: 10px 10px;
+
+            border-color: #adb1b8 #a2a6ac #8d9096;
+            border-style: solid;
+            border-width: 2px;
+            border-radius: 10px;
+            box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+            box-sizing: border-box;
+        }
+        .nbr:hover{
+            background-color: #ffe800;
+            color:#3d61ad
+        }
+        .txt{
+            font-size: 30px;
+            color:#dadce0;
+        }
+        .prof{
+            width:100px;
+            height:100px;
+            border-radius: 50px 50px;
+        }
+        .question{
+            width:900px;
+            height:610px;
+            border-radius: 10px 10px;
+
+        }
+
+        .valider{
+            padding-top:10px;
+            width:180px;
+            height:60px;
+            border: 1px solid #dadce0;
+            border-radius: 50px 50px;
+            color:#ffffff;
+            background-color :#2bde1a;
+            font-size: 20px;
+            cursor: pointer;
+
+            border-color: #adb1b8 #a2a6ac #8d9096;
+            border-style: solid;
+            border-width: 2px;
+            border-radius: 10px;
+            box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+            box-sizing: border-box;
+        }
+        .corrige{
+            padding-top:10px;
+            width:180px;
+            height:60px;
+            border: 1px solid #dadce0;
+            border-radius: 150px 150px;
+            color:#ffffff;
+            background-color :#cf6164;
+            font-size: 20px;
+            cursor: pointer;
+            background: linear-gradient(
+                    to top,
+                    #cf6164 20%,
+                    #cf6164 20%,
+                    #e07384 80%,
+                    #e07384 100%
+
+            )
+
+            border-color: #adb1b8 #a2a6ac #8d9096;
+            border-style: solid;
+            border-width: 2px;
+            border-radius: 20px;
+            box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+            box-sizing: border-box;
+
+        }
+        .telcommadde{
+            margin-left:10px;
+            margin-right:10px;
+            border-radius: 30px 30px;
+            background-color :#2e2c8f;
+            background: linear-gradient(
+                    to top,
+                    #241768 20%,
+                    #241768 20%,
+                    #624cdf 80%,
+                    #624cdf 100%
+
+            )
+        }
+        .telcommadde-nbr{
+
+            background-color :#312a6d;
+            padding-top:10px;
+            width:150px;
+            height:40px;
+            border: 2px solid #585975;
+            border-radius:15px 15px;
+            color:#ffffff;
+            font-size: 20px;
+            cursor: pointer;
+
+            border-color: #adb1b8 #a2a6ac #8d9096;
+            border-style: solid;
+            border-width: 2px;
+            border-radius: 10px;
+            box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+            box-sizing: border-box;
+        }
+        .go{
+            background-color:#717290
+        }
+
+        .quizz{
+            height:650px;
+            margin-top:50px;
+            border: 2px solid #858297;
+            border-radius:15px 15px;
+            background-color: #717290;
+        }
+        .button-14 {
+            background-image: linear-gradient(#f7f8fa, #e7e9ec);
+            border-color: #adb1b8 #a2a6ac #8d9096;
+            border-style: solid;
+            border-width: 1px;
+            border-radius: 3px;
+            box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+            box-sizing: border-box;
+
+
+        }
+
+        ._choix{
+            width:30px;
+            margin-left:4px;
+            margin-right:2px;
+            padding-bottom:4px;
+            height:20px;
+            border-bottom: 4px solid red;
+        }
+        .info{
+            width:100%;
+            height:80px;
+            background-color:#717290;
+            background-image: linear-gradient(#f7f8fa, #e7e9ec);
+            border-color: #adb1b8 #a2a6ac #8d9096;
+            border-style: solid;
+            border-width: 1px;
+            border-radius: 15px;
+            box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+            box-sizing: border-box;
+        }
+        .icon{
+            width:50px;
+            height:50px;
+
+        }
+        .volume{
+            width:30px;
+            height:30px;
+        }
+        .categorie{
+            width:230px;
+            height:80px;
+            background-color:#717290;
+            background-image: linear-gradient(#f7f8fa, #e7e9ec);
+            border-color: #adb1b8 #a2a6ac #8d9096;
+            border-style: solid;
+            border-width: 1px;
+            border-radius: 15px;
+            box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+            box-sizing: border-box;
+
+
+        }
+
+        .font-text{
+            font-family: "Times New Roman";
+            font-size: 20px;
+            font-weight: 100;
+            line-height: 1.4;
+            color: rgb(var(--clr-gray));
+            padding-left:20px;
+            letter-spacing: unset;
+
+        }
+
+        .font-text-categorie{
+            font-family: "Times New Roman";
+            font-size: 20px;
+            font-weight: 100;
+            line-height: 1.4;
+            color: rgb(var(--clr-gray));
+
+            letter-spacing: unset;
+
+        }
+        .cr{
+            width:900px;
+            height:120px;
+
+            color: #ffffff;
+            font-family: "Times New Roman";
+            font-size: 20px;
+            font-weight: 100;
+            line-height: 1.4;
+            position: fixed;
+            left: 380px;
+            top: 720px;
+
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+            box-sizing: border-box;
+            color: #000000;
+            background: linear-gradient(
+                    to top,
+                    #cf6164 20%,
+                    #cf6164 20%,
+                    #e07384 80%,
+                    #e07384 100%
+
+            )
+
+        }
+        .fermer{
+            width:20px;
+            height:20px;
+            cursor: pointer;
+        }
+        .telcommadde{
+            margin-left:10px;
+            margin-right:10px;
+            border-radius: 30px 30px;
+            background-color :#2e2c8f;
+            background: linear-gradient(
+                    to top,
+                    #241768 20%,
+                    #241768 20%,
+                    #624cdf 80%,
+                    #624cdf 100%
+
+            )
+        }
+
+        .valider{
+            padding-top:10px;
+            width:180px;
+            height:60px;
+            border: 1px solid #dadce0;
+            border-radius: 50px 50px;
+            color:#ffffff;
+            background-color :#2bde1a;
+            font-size: 20px;
+            cursor: pointer;
+
+            border-color: #adb1b8 #a2a6ac #8d9096;
+            border-style: solid;
+            border-width: 2px;
+            border-radius: 10px;
+            box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+            box-sizing: border-box;
+        }
+
+        /* Animation pour clignoter en rouge */
+        @keyframes blink {
+            0% { background-color: transparent; }
+            50% { background-color: red; }
+            100% { background-color: transparent; }
+        }
+
+        /* Appliquer l'animation à l'arrière-plan */
+        #countdown-container.blink {
+            animation: blink 0.5s infinite alternate;
+        }
+
+    button{
+        outline: none;
+        border: none;
+    }
+
+
+    /* .answer {
+      background-color: #ffffff;
+      border-radius: 50%;
+      padding: 15px;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 48px;
+      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s;
+      margin: auto;
+    }
+    
+    .answer-active{
+      background-color: #46c1f6;
+      touch-action: auto;
+      color: #fff;
+    } */
+
+    main { overflow-y: hidden; }
+    .answer-checkbox{
+        font-size:25px
+    }
+    .btn-primary{
+        width:90%;
+        font-size:30px;
+
+    }
+
+
+
+    .answer-button {
+        background-color: #ffffff;
+        border-radius: 50%;
+        padding: 15px;
+        width: 30px;
+        height: 30px;
+        display: inline-flex; /* Utilisation de l'affichage en ligne pour réduire l'espace */
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s;
+        margin: 5px; /* Réduction de la marge entre les boutons */
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+    }
+        @media screen and (max-width: 768px) {
+            .telcommadde {
+                /* Modifier les dimensions et les marges pour s'adapter à l'écran mobile */
+                width: 90%; /* Ajustez la largeur selon vos besoins */
+                margin-left: auto; /* Centrer horizontalement */
+                margin-right: auto; /* Centrer horizontalement */
+                margin-top: 0; /* Supprimer la marge supérieure */
+                margin-bottom: 0; /* Supprimer la marge inférieure */
+            }
+            .telcommadde form table {
+                /* Réduire la hauteur de la table pour s'adapter à l'écran mobile */
+                height: auto;
+            }
+            .btn-primary  {
+                background-color: #007bff; /* Couleur de fond */
+                border-color: #007bff; /* Couleur de la bordure */
+                color: #fff; /* Couleur du texte */
+                padding: 0px 0px; /* Espacement à l'intérieur du bouton */
+                font-size: 20px; /* Taille de la police */
+                border-radius: 5px; /* Bordure arrondie */
+                cursor: pointer; /* Curseur de la souris */
+                width:100%;
+                height:40px;
+                transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Transition douce lors du survol */
+            }
+            .answer-button{
+                height:15px;
+                font-size: 15px
+            }
+        
+          
+
+            .btn-primary:hover {
+                background-color: #0056b3; /* Changement de couleur de fond au survol */
+                border-color: #0056b3; /* Changement de couleur de la bordure au survol */
+                color: #fff; /* Changement de couleur du texte au survol */
+            }
+            .telcommadde .corrige,
+            .telcommadde .valider {
+                /* Ajuster la largeur des boutons pour s'adapter à l'écran mobile */
+                width: 100%; /* Ajustez la largeur selon vos besoins */
+                margin: auto; /* Centrer horizontalement et ajouter un peu de marge */
+            }
+           
+                .mobile-hidden {
+                    display: none;
+                }
+            
+        }
+
+
+        .answer-button.answer-active {
+        background-color: #46c1f6;
+        color: #fff;
+    }
+
+    .answer-button.answer-inactive {
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+
+
+    .action {
+        transition: all 0.2s;
+    }
+
+
+    /*
+    .action:hover {
+      width: 100px;
+      height: 100px;
+    }*/
+
+    </style>
+
+
+</head>
+<body>
+
+
+
+
+<div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
+
+
+    <div class="sidebar-brand d-none d-md-flex">
+        <form action="/i18n/setlang/" method="post">
+            <input type="hidden" name="csrfmiddlewaretoken" value="SCRUBBED">
+            <input name="next" type="hidden" value="/dashboard">
+
+
+                <select class="btn btn-outline-light m-3" name="language" aria-label="Language Select" onchange="this.form.submit()">
+                    
+                    
+                    
+                    
+                        <option value="fr" selected="">
+                            français
+                        </option>
+                    
+                        <option value="ar">
+                            العربيّة
+                        </option>
+                    
+                </select>
+
+        </form>
+    </div>
+
+
+    <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="init"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden;"><div class="simplebar-content" style="padding: 0px;">
+            <li class="nav-item">
+                <a class="nav-link" href="/fr/dashboard">
+                    <i class="fa fa-home px-2"></i>Tableau de Bord</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/calendar/calender/">
+                    <i class="fa fa-calendar-days px-2"></i> Calendrier</a>
+            </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/cours/mycourses/">
+                <i class="fa fa-book px-2"></i> Supports de cours</a>
+        </li>
+        
+
+        
+            <li class="nav-item">
+                <a class="nav-link" href="/accounts/396725/progress/"><i class="fa fa-book px-2"></i> Progression</a>
+                <!--</li>
+                        <li class="nav-item">
+
+            </li>   <-->
+            <!--<li class="nav-item">
+                <a class="nav-link" href="/quizprogress/"><i class="fa fa-book px-2"></i> Historique des Quizs</a>
+            </li><-->
+        
+
+
+        </li><li class="nav-item">
+            <a class="nav-link" href="/calendar/all-event-list/"><i class="fa-solid fa-users-viewfinder px-2"></i> Toutes Sessions</a>
+        </li>
+
+        
+
+
+
+        </div></div></div></div><div class="simplebar-placeholder" style="width: 256px; height: 854px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="height: 0px; transform: translate3d(0px, 0px, 0px); display: none;"></div></div></ul>
+
+
+
+
+
+
+
+        <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
+    </div>
+    
+
+<div class="wrapper d-flex flex-column min-vh-100">
+
+    
+
+
+
+
+
+
+    <style>
+    .new-indicator {
+    animation: blinker 1s linear infinite;
+    }
+
+    @keyframes blinker {
+    50% {
+    opacity: 0;
+    }
+    }
+    </style>
+
+<header class="header header-sticky mb-4 p-0">
+    <div class="container-fluid">
+        <div class="col d-flex flex-row align-items-center">
+            <div class="m-0">
+                <button class="header-toggler px-md-0 me-md-3" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
+                    <i class="cil-menu icon icon-xl"></i>
+                </button>
+
+            </div>
+
+
+
+            <div class="m-0">
+                <figure class="m-0"><img src="/static/assets/logo/narsa-logo-header.svg" height="100vh" alt="NARSA"></figure>
+            </div>
+
+        </div>
+        <div class="col d-flex flex-row-reverse align-items-center m-0">
+            <div class="m-0">
+
+
+                <ul class="header-nav ms-3">
+                    <li>
+
+
+                    </li>
+                    <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <div class="card overflow-hidden">
+                            <div class="card-body p-0 d-flex flex-row-reverse align-items-center">
+                                <div class="p-1 me-3">
+                                    <div class="avatar avatar-md">
+                                        
+                                        <img class="avatar-img" src="/static/src/img/man.png" alt="directeur">
+                                        
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-medium-emphasis fw-semibold small px-3">Bonjour : SCRUBBED</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                        <div class="dropdown-menu dropdown-menu-end pt-0">
+                            <div class="dropdown-header bg-light py-2">
+                                <div class="fw-semibold">Profil</div>
+                            </div>
+                            <a class="dropdown-item" href="#">
+                                <i class="cil-user icon icon-xl"></i> الصفحة الشخصية</a>
+                            <div class="dropdown-header bg-light py-2">
+                                <div class="fw-semibold">Compte</div>
+                            </div><a class="dropdown-item" href="/accounts/update-password">
+                            <i class="cil-dialpad icon icon-xl"></i>Changer PWD</a>
+                            <div class="dropdown-header bg-light py-2">
+                                <div class="fw-semibold">Help</div>
+                            </div><a class="dropdown-item" href="#">
+                            <i class="cil-book icon icon-lg"></i>Manuel d utilisation</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/accounts/signout/">
+                                <i class="cil-account-logout icon icon-lg"></i> الخروج</a>
+                        </div>
+                    </li>
+
+                </ul>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="header-divider m-0 p-0"></div>
+    <div class="container-fluid ">
+        <nav aria-label="breadcrumb" id="fildariane">
+            <ol class="breadcrumb my-0 ms-2">
+
+
+
+
+
+               
+                <li class="">
+                    <a class="btn" role="button" href="/static/lexique.pdf"><i class="fa fa-book px-2"></i>Lexique </a>
+                </li>
+                
+                    <li class="">
+
+                        <a class="btn" role="button" href="/quizexamenblanc/take/">
+                            <i class="fa fa-clipboard-check new-indicator"></i>
+                            <span class="new-indicator">Examen Blanc</span>
+                        </a>
+
+                    </li>
+                
+
+
+
+
+
+            </ol>
+        </nav>
+    </div>
+</header>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+
+
+    
+
+
+<style>
+    :root {
+        --narsa-blue: #0056a4;
+        --narsa-orange: #e74c3c;
+        --narsa-light-orange: #ff7e00;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, var(--narsa-blue) 0%, #003d7a 100%);
+    }
+    .bg-gradient-danger {
+        background: linear-gradient(135deg, var(--narsa-orange) 0%, #c0392b 100%);
+    }
+    .bg-gradient-success {
+        background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+    }
+    .modal-body p {
+        line-height: 1.7;
+        color: #333;
+    }
+    .modal-body a {
+        color: var(--narsa-blue);
+        text-decoration: underline;
+        font-weight: 600;
+    }
+    .modal-body a:hover {
+        color: var(--narsa-light-orange);
+    }
+    .btn-primary {
+        background-color: var(--narsa-blue);
+        border-color: var(--narsa-blue);
+    }
+    .btn-primary:hover {
+        background-color: var(--narsa-light-orange);
+        border-color: var(--narsa-light-orange);
+    }
+    .btn-success {
+        background-color: #27ae60;
+        border-color: #27ae60;
+    }
+    .btn-success:hover {
+        background-color: #1e8449;
+        border-color: #1e8449;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #5a6268;
+    }
+</style>
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content shadow-lg border-0 rounded-3 overflow-hidden">
+            <div class="modal-header bg-gradient-danger text-white border-0">
+                <h5 class="modal-title fw-bold d-flex align-items-center" id="errorModalLabel">
+                    <i class="bi bi-x-circle-fill me-2 fs-4"></i>Echec
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4" id="errorModalMessage"></div>
+            <div class="modal-footer border-0 bg-light px-4 py-3">
+                <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content shadow-lg border-0 rounded-3 overflow-hidden">
+            <div class="modal-header bg-gradient-success text-white border-0">
+                <h5 class="modal-title fw-bold d-flex align-items-center" id="successModalLabel">
+                    <i class="bi bi-check-circle-fill me-2 fs-4"></i>succès
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4" id="successModalMessage"></div>
+            <div class="modal-footer border-0 bg-light px-4 py-3">
+                <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle me-1"></i>D'accord
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="announcementModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content shadow-lg border-0 rounded-3 overflow-hidden">
+            <div class="modal-header bg-gradient-primary text-white border-0 d-flex align-items-center justify-content-center position-relative">
+                
+                <h5 class="modal-title fw-bold d-flex align-items-center justify-content-center m-0" id="announcementModalLabel" style="color: var(--narsa-light-orange); background: transparent !important;">
+                    <i class="bi bi-megaphone-fill me-2 fs-4"></i>Annonce
+                </h5>
+                <button type="button" class="btn-close btn-close-white position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4" id="announcementModalMessage">
+            </div>
+            <div class="modal-footer border-0 bg-light px-4 py-3 d-flex justify-content-center">
+                <button type="button" class="btn px-4" style="background-color: var(--narsa-light-orange); border-color: var(--narsa-light-orange); color: white;" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle me-1"></i>J'ai compris
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+        });
+    </script>
+
+
+
+
+
+    
+
+
+    <audio id="alarm-sound" src="/static/assets/img_borne/alert.wav" preload="auto"></audio>
+    
+        <div class="text-center mt-3" hidden="True">
+        
+            
+                 <audio id="myAudio" controls="" autoplay="">
+                <source src="/media/uploads/questions/son/fr/100.mp3" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
+                
+        </div>
+    
+
+
+
+
+
+    <center>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <main role="main" class="container-fluid" style="width: 70%;  overflow: hidden;">
+        <div class="row" style="height: 100%">
+            <div class="col-md-9">
+
+                
+                    <div class="row">
+                        <div style="height: 100%; padding: 0 !important; margin: 0 !important" class="col-md-12 bg-white">
+                            
+                                
+                                    <img src="/media/uploads/questions/images/fr/100.png" id="image" style="height: 70vh; width: 100%;">
+                                
+                            
+                        </div>
+                    </div>
+                
+            </div>
+            <div style=" background-color: #717290" class="col-md-3">
+
+
+                <div class="go mobile-hidden">
+                    <table cellpadding="15" cellspacing="5" border="0" style="border-radius: 10% 10%;">
+                        <tbody><tr>
+                            <td align="center">
+                                <div class="choix">
+                                    <table border="0">
+                                        <tbody><tr>
+                                            <td align="center"><div class="_ch"><div class="_choix" id="_1"></div></div></td>
+                                            <td style="text-align: center;"> <div class="_ch"><div class="_choix" id="_2"></div></div></td>
+                                            <td style="text-align: center;"><div class="_ch"><div class="_choix" id="_3"></div></div></td>
+                                            <td style="text-align: center;"><div class="_ch"><div class="_choix" id="_4"></div></div></td>
+                                        </tr>
+                                    </tbody></table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </div>
+                    <div class="telcommadde">
+                        <form action="" method="POST" class="mt-5" name="myForm">
+                            <input type="hidden" name="csrfmiddlewaretoken" value="SCRUBBED">
+                            <table cellpadding="15" cellspacing="5" border="0" style="height: auto;">
+                                <tbody><tr><td align="center"><div class="corrige" onclick="corrige()">Corriger</div></td></tr>
+                                
+                                    
+                                    <tr><td align="center"> <label id="al_1" class="btn btn-primary"><label for="id_answers_0"><input type="checkbox" name="answers" value="2226" class="answer-button" onchange="changeLabelColor(this)" id="id_answers_0">
+ 1</label></label></td></tr>
+                                
+                                    
+                                    <tr><td align="center"> <label id="al_2" class="btn btn-primary"><label for="id_answers_1"><input type="checkbox" name="answers" value="2227" class="answer-button" onchange="changeLabelColor(this)" id="id_answers_1">
+ 2</label></label></td></tr>
+                                
+                                <tr><td align="center"><input id="form" type="submit" value="Valider" class="valider"></td></tr>
+                            </tbody></table>
+
+                        </form>
+                    </div>
+            </div>
+        </div>
+        
+                <div class="row" style="background-color: #717290;">
+                    <div class="col-md-3 mb-4" style="margin-top:1%;">
+                        <div class="info">
+                            <div class="info-content">
+                                <div class="info-row">
+                                    <div class="info-cell font-text">Temps restant</div>
+                                    <div class="info-cell"><h1><div id="div_temps" style="width:60px">30</div></h1></div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4" style="margin-top:1%;">
+                        <div class="info">
+                            
+                                <div class="info-content">
+                                    <div class="info-row">
+                                        <div class="info-cell font-text" valign="top">Question</div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-cell"><h1><span id="numq">33</span>/40</h1></div>
+                                    </div>
+                                    
+                                </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4" style="margin-top:1%;">
+                        <div class="info">
+                            <div class="info-content">
+                                <div class="info-row">
+                                    <div class="info-cell font-text">Volume</div>
+                                    <div class="info-cell">
+                                        <input type="radio" name="volume" class="volume" checked="">
+                                        <input type="radio" name="volume" class="volume" onclick="volumee()">
+                                        <input type="radio" name="volume" class="volume">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4" style="margin-top:1%;">
+                        <div class="info">
+                            <div class="categorie-content">
+                                <div class="categorie-row">
+                                    
+                                    <div class="categorie-cell font-text-categorie" style="padding-right:10%;">Catégorie</div>
+                                </div>
+                                <div class="categorie-row">
+                                    
+                                    <div class="categorie-cell" style="padding-right:10%;"><span class="font-text">B</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          
+
+
+
+    </main>
+
+
+    <audio [volume]="volume" autoplay="" #audioalert="" class="d-none" *ngif="sonDataAlert" controls="">
+        <source [src]="sonDataAlert" type="audio/mpeg">
+    </audio>
+
+    
+
+
+
+
+
+
+</center></div>
+
+<footer class="mt-auto px-2 pt-2">
+    <p>Copyright NARSA 2023. All rights reserved.</p>
+</footer>
+
+
+    <!-- CoreUI and necessary plugins-->
+    <script src="/static/vendors/%40coreui/coreui-4.2.6/js/coreui.bundle.min.js"></script>
+    <script src="/static/vendors/simplebar-6.2.5/js/simplebar.min.js"></script>
+
+    <!-- We use those scripts to show code examples, you should remove them in your application.-->
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    function afficherImage() {
+        var fenetrePopup = window.open("", "Popup", "width=500,height=500");
+        fenetrePopup.document.write("<img src='URL_DE_VOTRE_IMAGE' style='max-width: 100%; max-height: 100%;' />");
+    }
+</script>
+
+<!-- Specific Page JS goes HERE  -->
+
+    <script>
+    function fermer(){
+
+
+    var cr= document.getElementById("cr");
+    cr.style.display = "none";
+
+
+    }
+
+    function valider(){
+    var x = document.getElementById("myAudio").paused;
+    if ( x!=false){
+    //document.getElementById('myImageId').src =  'corection.jpg';
+    //	var cr= document.getElementById("cr");
+    //	cr.style.display = "block";
+
+    }
+
+
+
+    }
+    function corrige() {
+        // Désélectionner les cases à cocher dans le widget CheckboxSelectMultiple
+        var checkboxes = document.querySelectorAll('input[type="checkbox"][name="answers"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = false;
+            checkbox.parentElement.parentElement.style.background='#2819af'
+            document.getElementById("_1").innerText= " "
+            document.getElementById("_2").innerText= " "
+            document.getElementById("_3").innerText= " "
+            document.getElementById("_4").innerText= " "
+        });
+    }
+
+
+
+
+
+
+
+
+    // Récupération de la couleur du compte à rebours depuis le data attribut
+        // Fonction pour démarrer le compte à rebours
+    function startCountdown() {
+        var counter = 30; // Valeur initiale du compteur
+        var alarmSound = document.getElementById('alarm-sound');
+
+        // Fonction pour diminuer le compteur
+        function decreaseCounter() {
+            var audio = document.getElementById("myAudio");
+            var isPlaying = !audio.paused && !audio.ended;
+
+            // Si l'audio est en cours de lecture, arrêter le compteur
+            if (isPlaying) {
+                clearInterval(timer);
+                return;
+            }
+
+            // Mettre à jour l'affichage du compteur
+            document.getElementById('div_temps').innerText = counter;
+
+            // Décrémenter le compteur
+            counter--;
+            if (counter === 10) {
+                document.getElementById('div_temps').classList.add('blink');
+                alarmSound.play();
+            }
+            // Arrêt du compteur une fois qu'il atteint 0
+            if (counter < 0) {
+                clearInterval(timer);
+                var form = document.querySelector("form[name=myForm]");
+
+                // Envoyer le formulaire
+                form.submit();
+                // Vous pouvez ajouter d'autres actions ici une fois que le compteur atteint 0
+            }
+        }
+
+        // Exécution de la fonction decreaseCounter() à intervalles réguliers (toutes les 1 seconde)
+        var timer = setInterval(decreaseCounter, 1000); // Interval de 1000ms = 1 seconde
+
+        // Démarrage du compte à rebours lorsque la page est chargée
+        decreaseCounter();
+    }
+
+    // Démarrage du compte à rebours lorsque la page est chargée
+    document.addEventListener('DOMContentLoaded', startCountdown);
+
+    // Réinitialiser le compte à rebours lorsque l'audio se termine ou n'existe pas
+    var audio = document.getElementById("myAudio");
+    audio.addEventListener('ended', startCountdown);
+    if(audio.paused) {
+        startCountdown();
+    }
+
+    var initialBackgroundColor = window.getComputedStyle(label).backgroundColor;
+    function changeLabelColor(checkbox) {
+        var label = checkbox.parentElement; // Obtenez l'élément parent (le label) de la case à cocher
+        if (checkbox.checked) {
+            label.parentElement.style.background = '#F19385';
+            if(label.parentElement.id=='al_1')
+            document.getElementById("_1").innerText= "1"
+            if(label.parentElement.id=='al_2')
+                document.getElementById("_2").innerText= "2"
+            if(label.parentElement.id=='al_3')
+                document.getElementById("_3").innerText= "3"
+            if(label.parentElement.id=='al_4')
+                document.getElementById("_4").innerText= "4"
+            // Changez la couleur du label en rouge si la case à cocher est cochée
+        } else {
+            label.parentElement.style.background = ''; // Réinitialisez la couleur du label si la case à cocher est décochée
+            if(label.parentElement.id=='al_1')
+                document.getElementById("_1").innerText= " "
+            if(label.parentElement.id=='al_2')
+                document.getElementById("_2").innerText= " "
+            if(label.parentElement.id=='al_3')
+                document.getElementById("_3").innerText= " "
+            if(label.parentElement.id=='al_4')
+                document.getElementById("_4").innerText= " "
+        }
+    }
+
+
+    </script>
+
+
+
+
+</body></html>

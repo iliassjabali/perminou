@@ -1,0 +1,2211 @@
+<html lang="en" dir="ltr"><head>
+    <!-- Path to manifest.json -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- Add to homescreen for Chrome on Android -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="MyApp">
+
+
+<!-- Chrome for Android theme color -->
+<meta name="theme-color" content="#000">
+
+<!-- Add to homescreen for Safari on iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MyApp">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-72x72.png" sizes="72x72">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-96x96.png" sizes="96x96">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-128x128.png" sizes="128x128">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-144x144.png" sizes="144x144">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-152x152.png" sizes="152x152">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-192x192.png" sizes="192x192">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-384x384.png" sizes="384x384">
+    
+        <link rel="apple-touch-icon" href="/static/images/icons/icon-512x512.png" sizes="512x512">
+    
+
+
+
+
+<link href="/static/images/icons/splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1242x2208.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-828x1792.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1242x2688.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1536x2048.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1668x2224.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-1668x2388.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+<link href="/static/images/icons/splash-2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image">
+
+
+
+<!-- Tile for Win8 -->
+<meta name="msapplication-TileColor" content="#fff">
+
+<meta name="msapplication-TileImage" content="/static/images/icons/icon-512x512.png">
+
+
+<link rel="icon" sizes="512x512" href="/static/images/icons/icon-512x512.png">
+
+
+<script type="text/javascript">
+    // Initialize the service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/serviceworker.js', {
+            scope: '/'
+        }).then(function (registration) {
+            // Registration was successful
+            
+            console.log('django-pwa: ServiceWorker registration successful with scope: ', registration.scope);
+            
+        }, function (err) {
+            // registration failed :(
+            
+            console.log('django-pwa: ServiceWorker registration failed: ', err);
+            
+        });
+    }
+</script>
+
+    <script>(function() {var w = window,s = w.localStorage,at=Date.now()+Math.max(1799.969875,0)*1000+999;w.addEventListener('load', function() {s['djalLogoutAt'] = at;function upd() {if (s['djalLogoutAt'] > at) {at = s['djalLogoutAt'];setTimeout(upd, at - Date.now());}else {delete s['djalLogoutAt'];w.location.reload();}}setTimeout(upd, at - Date.now());});})();</script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title> Examen_Blanc </title>
+    <meta name="description" content="NARSA Online Learning Platform">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/static/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/static/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/static/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/static/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/static/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/static/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/static/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/static/favicon/manifest.json" crossorigin="use-credentials">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/static/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+
+    <link rel="stylesheet" href="/static/vendors/simplebar-6.2.5/css/simplebar.css">
+    <link rel="stylesheet" href="/static/vendors/simplebar-6.2.5/custom/simplebar.css">
+
+
+    <link rel="stylesheet" href="/static/vendors/%40coreui/coreui-4.2.6/css/style.css">
+    <link rel="stylesheet" href="/static/vendors/%40coreui/icons-3.0.1/css/free.min.css">
+    <link href="/static/vendors/Buttons-2.4.2/css/buttons.bootstrap5.css" rel="stylesheet">
+    <link href="/static/vendors/Select-1.7.0/css/select.bootstrap5.css" rel="stylesheet">
+
+    <script>
+        function disableRightClick(event) {
+            event.preventDefault();
+        }
+
+        document.addEventListener('contextmenu', disableRightClick);
+    </script>
+
+
+
+
+
+    <link href="/static/vendors/bootstrap-icons-1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/static/vendors/DataTables-1.13.6/css/dataTables.bootstrap5.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/assets/custom.css">
+
+
+
+
+
+    <link rel="stylesheet" href="/static/vendors/fontawesome-free-6.4.2-web/css/all.css">
+    <link rel="stylesheet" href="/static/assets/css/site.css">
+    
+
+    
+
+    <!-- Specific Page CSS goes HERE  -->
+    
+
+<style>
+    .modal-explanation {
+        margin-top: 20px; /* Espacement supplémentaire par rapport au contenu précédent */
+    }
+
+    .modal-explanation p {
+        font-size: 16px; /* Taille de police */
+        line-height: 1.5; /* Hauteur de ligne pour une lecture fluide */
+        color: #333; /* Couleur du texte */
+        margin-bottom: 10px; /* Espacement en bas du paragraphe */
+    }
+    /* Styles pour la fenêtre modale */
+    .modal {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .modal-question-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .modal-details {
+        margin-top: 10px;
+    }
+
+    .modal-details p {
+        margin: 0;
+    }
+
+    .modal-answer {
+        margin-top: 10px;
+    }
+
+    .success {
+        background-color: #68E73C;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+</style>
+
+
+
+
+
+</head>
+<body>
+
+
+
+
+<div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
+
+
+    <div class="sidebar-brand d-none d-md-flex">
+        <form action="/i18n/setlang/" method="post">
+            <input type="hidden" name="csrfmiddlewaretoken" value="SCRUBBED">
+            <input name="next" type="hidden" value="/dashboard">
+
+
+                <select class="btn btn-outline-light m-3" name="language" aria-label="Language Select" onchange="this.form.submit()">
+                    
+                    
+                    
+                    
+                        <option value="fr" selected="">
+                            français
+                        </option>
+                    
+                        <option value="ar">
+                            العربيّة
+                        </option>
+                    
+                </select>
+
+        </form>
+    </div>
+
+
+    <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="init"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden;"><div class="simplebar-content" style="padding: 0px;">
+            <li class="nav-item">
+                <a class="nav-link" href="/fr/dashboard">
+                    <i class="fa fa-home px-2"></i>Tableau de Bord</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/calendar/calender/">
+                    <i class="fa fa-calendar-days px-2"></i> Calendrier</a>
+            </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/cours/mycourses/">
+                <i class="fa fa-book px-2"></i> Supports de cours</a>
+        </li>
+        
+
+        
+            <li class="nav-item">
+                <a class="nav-link" href="/accounts/396725/progress/"><i class="fa fa-book px-2"></i> Progression</a>
+                <!--</li>
+                        <li class="nav-item">
+
+            </li>   <-->
+            <!--<li class="nav-item">
+                <a class="nav-link" href="/quizprogress/"><i class="fa fa-book px-2"></i> Historique des Quizs</a>
+            </li><-->
+        
+
+
+        </li><li class="nav-item">
+            <a class="nav-link" href="/calendar/all-event-list/"><i class="fa-solid fa-users-viewfinder px-2"></i> Toutes Sessions</a>
+        </li>
+
+        
+
+
+
+        </div></div></div></div><div class="simplebar-placeholder" style="width: 256px; height: 854px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="height: 0px; transform: translate3d(0px, 0px, 0px); display: none;"></div></div></ul>
+
+
+
+
+
+
+
+        <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
+    </div>
+    
+
+<div class="wrapper d-flex flex-column min-vh-100">
+
+    
+
+
+
+
+
+
+    <style>
+    .new-indicator {
+    animation: blinker 1s linear infinite;
+    }
+
+    @keyframes blinker {
+    50% {
+    opacity: 0;
+    }
+    }
+    </style>
+
+<header class="header header-sticky mb-4 p-0">
+    <div class="container-fluid">
+        <div class="col d-flex flex-row align-items-center">
+            <div class="m-0">
+                <button class="header-toggler px-md-0 me-md-3" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
+                    <i class="cil-menu icon icon-xl"></i>
+                </button>
+
+            </div>
+
+
+
+            <div class="m-0">
+                <figure class="m-0"><img src="/static/assets/logo/narsa-logo-header.svg" height="100vh" alt="NARSA"></figure>
+            </div>
+
+        </div>
+        <div class="col d-flex flex-row-reverse align-items-center m-0">
+            <div class="m-0">
+
+
+                <ul class="header-nav ms-3">
+                    <li>
+
+
+                    </li>
+                    <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <div class="card overflow-hidden">
+                            <div class="card-body p-0 d-flex flex-row-reverse align-items-center">
+                                <div class="p-1 me-3">
+                                    <div class="avatar avatar-md">
+                                        
+                                        <img class="avatar-img" src="/static/src/img/man.png" alt="directeur">
+                                        
+
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-medium-emphasis fw-semibold small px-3">Bonjour : SCRUBBED</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                        <div class="dropdown-menu dropdown-menu-end pt-0">
+                            <div class="dropdown-header bg-light py-2">
+                                <div class="fw-semibold">Profil</div>
+                            </div>
+                            <a class="dropdown-item" href="#">
+                                <i class="cil-user icon icon-xl"></i> الصفحة الشخصية</a>
+                            <div class="dropdown-header bg-light py-2">
+                                <div class="fw-semibold">Compte</div>
+                            </div><a class="dropdown-item" href="/accounts/update-password">
+                            <i class="cil-dialpad icon icon-xl"></i>Changer PWD</a>
+                            <div class="dropdown-header bg-light py-2">
+                                <div class="fw-semibold">Help</div>
+                            </div><a class="dropdown-item" href="#">
+                            <i class="cil-book icon icon-lg"></i>Manuel d utilisation</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/accounts/signout/">
+                                <i class="cil-account-logout icon icon-lg"></i> الخروج</a>
+                        </div>
+                    </li>
+
+                </ul>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="header-divider m-0 p-0"></div>
+    <div class="container-fluid ">
+        <nav aria-label="breadcrumb" id="fildariane">
+            <ol class="breadcrumb my-0 ms-2">
+
+
+
+
+
+               
+                <li class="">
+                    <a class="btn" role="button" href="/static/lexique.pdf"><i class="fa fa-book px-2"></i>Lexique </a>
+                </li>
+                
+                    <li class="">
+
+                        <a class="btn" role="button" href="/quizexamenblanc/take/">
+                            <i class="fa fa-clipboard-check new-indicator"></i>
+                            <span class="new-indicator">Examen Blanc</span>
+                        </a>
+
+                    </li>
+                
+
+
+
+
+
+            </ol>
+        </nav>
+    </div>
+</header>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+
+
+    
+
+
+<style>
+    :root {
+        --narsa-blue: #0056a4;
+        --narsa-orange: #e74c3c;
+        --narsa-light-orange: #ff7e00;
+    }
+    
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, var(--narsa-blue) 0%, #003d7a 100%);
+    }
+    .bg-gradient-danger {
+        background: linear-gradient(135deg, var(--narsa-orange) 0%, #c0392b 100%);
+    }
+    .bg-gradient-success {
+        background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+    }
+    .modal-body p {
+        line-height: 1.7;
+        color: #333;
+    }
+    .modal-body a {
+        color: var(--narsa-blue);
+        text-decoration: underline;
+        font-weight: 600;
+    }
+    .modal-body a:hover {
+        color: var(--narsa-light-orange);
+    }
+    .btn-primary {
+        background-color: var(--narsa-blue);
+        border-color: var(--narsa-blue);
+    }
+    .btn-primary:hover {
+        background-color: var(--narsa-light-orange);
+        border-color: var(--narsa-light-orange);
+    }
+    .btn-success {
+        background-color: #27ae60;
+        border-color: #27ae60;
+    }
+    .btn-success:hover {
+        background-color: #1e8449;
+        border-color: #1e8449;
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #5a6268;
+    }
+</style>
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content shadow-lg border-0 rounded-3 overflow-hidden">
+            <div class="modal-header bg-gradient-danger text-white border-0">
+                <h5 class="modal-title fw-bold d-flex align-items-center" id="errorModalLabel">
+                    <i class="bi bi-x-circle-fill me-2 fs-4"></i>Echec
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4" id="errorModalMessage"></div>
+            <div class="modal-footer border-0 bg-light px-4 py-3">
+                <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content shadow-lg border-0 rounded-3 overflow-hidden">
+            <div class="modal-header bg-gradient-success text-white border-0">
+                <h5 class="modal-title fw-bold d-flex align-items-center" id="successModalLabel">
+                    <i class="bi bi-check-circle-fill me-2 fs-4"></i>succès
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4" id="successModalMessage"></div>
+            <div class="modal-footer border-0 bg-light px-4 py-3">
+                <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle me-1"></i>D'accord
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="announcementModal" tabindex="-1" aria-labelledby="announcementModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content shadow-lg border-0 rounded-3 overflow-hidden">
+            <div class="modal-header bg-gradient-primary text-white border-0 d-flex align-items-center justify-content-center position-relative">
+                
+                <h5 class="modal-title fw-bold d-flex align-items-center justify-content-center m-0" id="announcementModalLabel" style="color: var(--narsa-light-orange); background: transparent !important;">
+                    <i class="bi bi-megaphone-fill me-2 fs-4"></i>Annonce
+                </h5>
+                <button type="button" class="btn-close btn-close-white position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4" id="announcementModalMessage">
+            </div>
+            <div class="modal-footer border-0 bg-light px-4 py-3 d-flex justify-content-center">
+                <button type="button" class="btn px-4" style="background-color: var(--narsa-light-orange); border-color: var(--narsa-light-orange); color: white;" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle me-1"></i>J'ai compris
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+        });
+    </script>
+
+
+
+
+
+    
+<center>
+    <div class="container center">
+        <h1 class="fw-bold">Résultat :3/40</h1>
+    </div>
+    <div class="container" id="quizDesign">
+        
+        
+        1
+        
+        <div id="questionModal_1" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_1" src="/media/uploads/questions/images/fr/416.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_1">
+            
+            <img src="/media/uploads/questions/images/ar/416.png" alt="uploads/questions/images/ar/416.png" width="100%">
+            
+        </button>
+        
+        
+        
+        2
+        
+        <div id="questionModal_2" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_2" src="/media/uploads/questions/images/fr/101.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_2">
+            
+            <img src="/media/uploads/questions/images/ar/101.png" alt="uploads/questions/images/ar/101.png" width="100%">
+            
+        </button>
+        
+        
+        
+        3
+        
+        <div id="questionModal_3" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_3" src="/media/uploads/questions/images/fr/146.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_3">
+            
+            <img src="/media/uploads/questions/images/ar/146.png" alt="uploads/questions/images/ar/146.png" width="100%">
+            
+        </button>
+        
+        
+        
+        4
+        
+        <div id="questionModal_4" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_4" src="/media/uploads/questions/images/fr/052.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_4">
+            
+            <img src="/media/uploads/questions/images/ar/052.gif" alt="uploads/questions/images/ar/052.gif" width="100%">
+            
+        </button>
+        
+        
+        
+        5
+        
+        <div id="questionModal_5" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_5" src="/media/uploads/questions/images/fr/IS014.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_5">
+            
+            <img src="/media/uploads/questions/images/ar/IS014.png" alt="uploads/questions/images/ar/IS014.png" width="100%">
+            
+        </button>
+        
+        
+        
+        6
+        
+        <div id="questionModal_6" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_6" src="/media/uploads/questions/images/fr/072.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_6">
+            
+            <img src="/media/uploads/questions/images/ar/072.png" alt="uploads/questions/images/ar/072.png" width="100%">
+            
+        </button>
+        
+        
+        
+        7
+        
+        <div id="questionModal_7" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_7" src="/media/uploads/questions/images/fr/565.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_7">
+            
+            <img src="/media/uploads/questions/images/ar/565.png" alt="uploads/questions/images/ar/565.png" width="100%">
+            
+        </button>
+        
+        
+        
+        8
+        
+        <div id="questionModal_8" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_8" src="/media/uploads/questions/images/fr/053.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_8">
+            
+            <img src="/media/uploads/questions/images/ar/053.png" alt="uploads/questions/images/ar/053.png" width="100%">
+            
+        </button>
+        
+        
+        
+        9
+        
+        <div id="questionModal_9" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_9" src="/media/uploads/questions/images/fr/084.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_9">
+            
+            <img src="/media/uploads/questions/images/ar/084.png" alt="uploads/questions/images/ar/084.png" width="100%">
+            
+        </button>
+        
+        
+        
+        10
+        
+        <div id="questionModal_10" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_10" src="/media/uploads/questions/images/fr/528.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_10">
+            
+            <img src="/media/uploads/questions/images/ar/528.png" alt="uploads/questions/images/ar/528.png" width="100%">
+            
+        </button>
+        
+        
+        
+        11
+        
+        <div id="questionModal_11" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_11" src="/media/uploads/questions/images/fr/537.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">3:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_11">
+            
+            <img src="/media/uploads/questions/images/ar/537.png" alt="uploads/questions/images/ar/537.png" width="100%">
+            
+        </button>
+        
+        
+        
+        12
+        
+        <div id="questionModal_12" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_12" src="/media/uploads/questions/images/fr/017.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_12">
+            
+            <img src="/media/uploads/questions/images/ar/017.png" alt="uploads/questions/images/ar/017.png" width="100%">
+            
+        </button>
+        
+        
+        
+        13
+        
+        <div id="questionModal_13" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_13" src="/media/uploads/questions/images/fr/539.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">3:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_13">
+            
+            <img src="/media/uploads/questions/images/ar/539.png" alt="uploads/questions/images/ar/539.png" width="100%">
+            
+        </button>
+        
+        
+        
+        14
+        
+        <div id="questionModal_14" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_14" src="/media/uploads/questions/images/fr/IS040.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_14">
+            
+            <img src="/media/uploads/questions/images/ar/IS040.png" alt="uploads/questions/images/ar/IS040.png" width="100%">
+            
+        </button>
+        
+        
+        
+        15
+        
+        <div id="questionModal_15" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_15" src="/media/uploads/questions/images/fr/635.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">3:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_15">
+            
+            <img src="/media/uploads/questions/images/ar/635.png" alt="uploads/questions/images/ar/635.png" width="100%">
+            
+        </button>
+        
+        
+        
+        16
+        
+        <div id="questionModal_16" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_16" src="/media/uploads/questions/images/fr/091.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">3:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_16">
+            
+            <img src="/media/uploads/questions/images/ar/091.png" alt="uploads/questions/images/ar/091.png" width="100%">
+            
+        </button>
+        
+        
+        
+        17
+        
+        <div id="questionModal_17" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_17" src="/media/uploads/questions/images/fr/155.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_17">
+            
+            <img src="/media/uploads/questions/images/ar/155.png" alt="uploads/questions/images/ar/155.png" width="100%">
+            
+        </button>
+        
+        
+        
+        18
+        
+        <div id="questionModal_18" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_18" src="/media/uploads/questions/images/fr/ISR003.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_18">
+            
+            <img src="/media/uploads/questions/images/ar/ISR003.png" alt="uploads/questions/images/ar/ISR003.png" width="100%">
+            
+        </button>
+        
+        
+        
+        19
+        
+        <div id="questionModal_19" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_19" src="/media/uploads/questions/images/fr/473.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">3:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">4:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_19">
+            
+            <img src="/media/uploads/questions/images/ar/473.png" alt="uploads/questions/images/ar/473.png" width="100%">
+            
+        </button>
+        
+        
+        
+        20
+        
+        <div id="questionModal_20" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_20" src="/media/uploads/questions/images/fr/400.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">3:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_20">
+            
+            <img src="/media/uploads/questions/images/ar/400.png" alt="uploads/questions/images/ar/400.png" width="100%">
+            
+        </button>
+        
+        
+        
+        21
+        
+        <div id="questionModal_21" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_21" src="/media/uploads/questions/images/fr/083.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_21">
+            
+            <img src="/media/uploads/questions/images/ar/083.png" alt="uploads/questions/images/ar/083.png" width="100%">
+            
+        </button>
+        
+        
+        
+        22
+        
+        <div id="questionModal_22" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_22" src="/media/uploads/questions/images/fr/046.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_22">
+            
+            <img src="/media/uploads/questions/images/ar/046.gif" alt="uploads/questions/images/ar/046.gif" width="100%">
+            
+        </button>
+        
+        
+        
+        23
+        
+        <div id="questionModal_23" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_23" src="/media/uploads/questions/images/fr/152.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_23">
+            
+            <img src="/media/uploads/questions/images/ar/152.png" alt="uploads/questions/images/ar/152.png" width="100%">
+            
+        </button>
+        
+        
+        
+        24
+        
+        <div id="questionModal_24" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_24" src="/media/uploads/questions/images/fr/615.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">4:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_24">
+            
+            <img src="/media/uploads/questions/images/ar/615.png" alt="uploads/questions/images/ar/615.png" width="100%">
+            
+        </button>
+        
+        
+        
+        25
+        
+        <div id="questionModal_25" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_25" src="/media/uploads/questions/images/fr/023.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_25">
+            
+            <img src="/media/uploads/questions/images/ar/023.png" alt="uploads/questions/images/ar/023.png" width="100%">
+            
+        </button>
+        
+        
+        
+        26
+        
+        <div id="questionModal_26" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_26" src="/media/uploads/questions/images/fr/129.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_26">
+            
+            <img src="/media/uploads/questions/images/ar/129.png" alt="uploads/questions/images/ar/129.png" width="100%">
+            
+        </button>
+        
+        
+        
+        27
+        
+        <div id="questionModal_27" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_27" src="/media/uploads/questions/images/fr/455.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_27">
+            
+            <img src="/media/uploads/questions/images/ar/455.png" alt="uploads/questions/images/ar/455.png" width="100%">
+            
+        </button>
+        
+        
+        
+        28
+        
+        <div id="questionModal_28" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_28" src="/media/uploads/questions/images/fr/544.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">3:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_28">
+            
+            <img src="/media/uploads/questions/images/ar/544.png" alt="uploads/questions/images/ar/544.png" width="100%">
+            
+        </button>
+        
+        
+        
+        29
+        
+        <div id="questionModal_29" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_29" src="/media/uploads/questions/images/fr/494.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_29">
+            
+            <img src="/media/uploads/questions/images/ar/494.png" alt="uploads/questions/images/ar/494.png" width="100%">
+            
+        </button>
+        
+        
+        
+        30
+        
+        <div id="questionModal_30" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_30" src="/media/uploads/questions/images/fr/ISR001.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_30">
+            
+            <img src="/media/uploads/questions/images/ar/ISR001.png" alt="uploads/questions/images/ar/ISR001.png" width="100%">
+            
+        </button>
+        
+        
+        
+        31
+        
+        <div id="questionModal_31" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_31" src="/media/uploads/questions/images/fr/139.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_31">
+            
+            <img src="/media/uploads/questions/images/ar/139.png" alt="uploads/questions/images/ar/139.png" width="100%">
+            
+        </button>
+        
+        
+        
+        32
+        
+        <div id="questionModal_32" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_32" src="/media/uploads/questions/images/fr/028.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_32">
+            
+            <img src="/media/uploads/questions/images/ar/028.png" alt="uploads/questions/images/ar/028.png" width="100%">
+            
+        </button>
+        
+        
+        
+        33
+        
+        <div id="questionModal_33" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_33" src="/media/uploads/questions/images/fr/100.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-success m-3" data-target-modal="#questionModal_33">
+            
+            <img src="/media/uploads/questions/images/ar/100.png" alt="uploads/questions/images/ar/100.png" width="100%">
+            
+        </button>
+        
+        
+        
+        34
+        
+        <div id="questionModal_34" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_34" src="/media/uploads/questions/images/fr/551.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_34">
+            
+            <img src="/media/uploads/questions/images/ar/551.png" alt="uploads/questions/images/ar/551.png" width="100%">
+            
+        </button>
+        
+        
+        
+        35
+        
+        <div id="questionModal_35" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_35" src="/media/uploads/questions/images/fr/664.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_35">
+            
+            <img src="/media/uploads/questions/images/ar/664.png" alt="uploads/questions/images/ar/664.png" width="100%">
+            
+        </button>
+        
+        
+        
+        36
+        
+        <div id="questionModal_36" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_36" src="/media/uploads/questions/images/fr/525.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_36">
+            
+            <img src="/media/uploads/questions/images/ar/525.png" alt="uploads/questions/images/ar/525.png" width="100%">
+            
+        </button>
+        
+        
+        
+        37
+        
+        <div id="questionModal_37" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_37" src="/media/uploads/questions/images/fr/124.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_37">
+            
+            <img src="/media/uploads/questions/images/ar/124.png" alt="uploads/questions/images/ar/124.png" width="100%">
+            
+        </button>
+        
+        
+        
+        38
+        
+        <div id="questionModal_38" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_38" src="/media/uploads/questions/images/fr/610.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">2:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-danger m-3" data-target-modal="#questionModal_38">
+            
+            <img src="/media/uploads/questions/images/ar/610.png" alt="uploads/questions/images/ar/610.png" width="100%">
+            
+        </button>
+        
+        
+        
+        39
+        
+        <div id="questionModal_39" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_39" src="/media/uploads/questions/images/fr/006.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-success m-3" data-target-modal="#questionModal_39">
+            
+            <img src="/media/uploads/questions/images/ar/006.png" alt="uploads/questions/images/ar/006.png" width="100%">
+            
+        </button>
+        
+        
+        
+        40
+        
+        <div id="questionModal_40" class="modal">
+            <div class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+                <span class="close">×</span>
+                <div class="modal-question-image">
+                    
+                    
+                    
+                    <img id="modalQuestionImage_40" src="/media/uploads/questions/images/fr/099.png" alt="Question Image">
+                    
+                </div>
+                <div class="modal-details">
+                    
+                    
+                    <div class="modal-answer">
+                        <div class="fw-bold1">1:  C'est la bonne réponse</div>
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <button type="button" class="btn btn-success m-3" data-target-modal="#questionModal_40">
+            
+            <img src="/media/uploads/questions/images/ar/099.gif" alt="uploads/questions/images/ar/099.gif" width="100%">
+            
+        </button>
+        
+        
+    </div>
+</center>
+
+
+
+
+
+</div>
+
+<footer class="mt-auto px-2 pt-2">
+    <p>Copyright NARSA 2023. All rights reserved.</p>
+</footer>
+
+
+    <!-- CoreUI and necessary plugins-->
+    <script src="/static/vendors/%40coreui/coreui-4.2.6/js/coreui.bundle.min.js"></script>
+    <script src="/static/vendors/simplebar-6.2.5/js/simplebar.min.js"></script>
+
+    <!-- We use those scripts to show code examples, you should remove them in your application.-->
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    function afficherImage() {
+        var fenetrePopup = window.open("", "Popup", "width=500,height=500");
+        fenetrePopup.document.write("<img src='URL_DE_VOTRE_IMAGE' style='max-width: 100%; max-height: 100%;' />");
+    }
+</script>
+
+<!-- Specific Page JS goes HERE  -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Récupérer tous les boutons de question
+        var questionButtons = document.querySelectorAll(".btn-danger, .btn-success");
+
+        // Associer un événement au clic des boutons de question pour ouvrir le modal correspondant
+        questionButtons.forEach(function(button) {
+            button.addEventListener("click", function(event) {
+                event.preventDefault(); // Pour éviter que le bouton ne déclenche une action par défaut
+
+                // Récupérer l'ID du modal cible depuis l'attribut data-target-modal
+                var targetModalId = this.getAttribute("data-target-modal");
+
+                // Récupérer le modal correspondant
+                var modal = document.querySelector(targetModalId);
+
+                // Ouvrir le modal
+                modal.style.display = "block";
+            });
+        });
+
+        // Fermer la fenêtre modale lorsque l'utilisateur clique sur le bouton de fermeture
+        var closeBtns = document.querySelectorAll(".close");
+        closeBtns.forEach(function(btn) {
+            btn.addEventListener("click", function() {
+                var modal = this.closest(".modal");
+                modal.style.display = "none";
+            });
+        });
+
+        // Fermer la fenêtre modale lorsque l'utilisateur clique en dehors de celle-ci
+        window.onclick = function(event) {
+            if (event.target.classList.contains("modal")) {
+                event.target.style.display = "none";
+            }
+        };
+    });
+</script>
+
+
+
+
+</body></html>
