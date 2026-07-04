@@ -1,26 +1,20 @@
 import { test, expect } from 'vitest';
-import { Effect, Either } from 'effect';
-import { Schema } from 'effect';
-import { Question, decodeQuestion } from '../src/entities';
+import { Effect, Either, Schema } from 'effect';
+import { Question, decodeQuestion, mediaUrl } from '../src/entities';
 
-const valid = {
-  id: 'q_1', sourceUrl: 'https://perminou.narsa.gov.ma/fr/quiz/1', chapterId: 'ch_1',
-  lang: 'fr', text: 'Que signifie ce panneau ?', ordinal: 1,
-  answers: [{ label: 'Stop', correct: true }, { label: 'Cédez', correct: false }],
-};
+const valid = { id: 565, category: 'B', hasImage: true, hasAudio: true,
+  answers: [ { narsaId: 933, index: 1, correct: true }, { narsaId: 934, index: 2, correct: false },
+             { narsaId: 935, index: 3, correct: true }, { narsaId: 936, index: 4, correct: false } ] };
 
-test('decodes a valid question', () => {
+test('decodes a valid multi-select question', () => {
   const q = Schema.decodeUnknownSync(Question)(valid);
-  expect(q.answers.filter((a) => a.correct)).toHaveLength(1);
-  expect(q.lang).toBe('fr');
+  expect(q.answers.filter((a) => a.correct)).toHaveLength(2);
 });
-
-test('rejects an empty question text', async () => {
-  const res = await Effect.runPromise(Effect.either(decodeQuestion({ ...valid, text: '' })));
-  expect(Either.isLeft(res)).toBe(true);
+test('rejects a non-integer id', async () => {
+  const r = await Effect.runPromise(Effect.either(decodeQuestion({ ...valid, id: 1.5 })));
+  expect(Either.isLeft(r)).toBe(true);
 });
-
-test('rejects an unknown lang', async () => {
-  const res = await Effect.runPromise(Effect.either(decodeQuestion({ ...valid, lang: 'en' })));
-  expect(Either.isLeft(res)).toBe(true);
+test('builds media urls by id + lang', () => {
+  expect(mediaUrl('image', 'fr', 565 as never)).toBe('/media/uploads/questions/images/fr/565.png');
+  expect(mediaUrl('sound', 'ar', 800 as never)).toBe('/media/uploads/questions/son/ar/800.mp3');
 });
