@@ -40,3 +40,17 @@ test('persists alphanumeric signage question ids (e.g. IS014)', async () => {
   const rows = await Effect.runPromise(program.pipe(Effect.provide(QuestionRepositoryLive(uri))));
   expect(rows.map((r) => r.id)).toContain('IS014');
 });
+
+test('allQuestions returns every upserted question; randomQuestions caps the count', async () => {
+  const seed = [1, 2, 3, 4, 5].map((n) => ({ id: String(n), category: 'B', hasImage: true, hasAudio: false,
+    answers: [{ narsaId: n * 10, index: 1, correct: true }, { narsaId: n * 10 + 1, index: 2, correct: false }] }));
+  const rows = await Effect.runPromise(Effect.gen(function* () {
+    const repo = yield* QuestionRepository;
+    for (const q of seed) yield* repo.upsertQuestion(q as never);
+    const all = yield* repo.allQuestions();
+    const rnd = yield* repo.randomQuestions(3);
+    return { all: all.length, rnd: rnd.length };
+  }).pipe(Effect.provide(QuestionRepositoryLive(uri))));
+  expect(rows.all).toBeGreaterThanOrEqual(5);
+  expect(rows.rnd).toBe(3);
+});

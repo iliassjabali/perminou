@@ -6,6 +6,8 @@ test('a Layer can satisfy the QuestionRepository port', async () => {
   const fake = Layer.succeed(QuestionRepository, {
     upsertQuestion: () => Effect.void,
     questionsByCategory: () => Effect.succeed([]),
+    allQuestions: () => Effect.succeed([]),
+    randomQuestions: () => Effect.succeed([]),
   });
   const program = Effect.gen(function* () {
     const repo = yield* QuestionRepository;
