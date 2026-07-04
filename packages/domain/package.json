@@ -1,0 +1,4 @@
+{ "name": "@perminou/domain", "version": "0.0.0", "type": "module",
+  "main": "src/index.ts", "types": "src/index.ts",
+  "dependencies": { "effect": "^3.14.0" },
+  "scripts": { "typecheck": "tsc --noEmit" } }
