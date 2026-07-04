@@ -26,15 +26,21 @@ importers:
 
   packages/db:
     dependencies:
+      '@effect/experimental':
+        specifier: ^0.35.3
+        version: 0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)
+      '@effect/platform':
+        specifier: ^0.71.7
+        version: 0.71.7(effect@3.21.4)
       '@effect/sql':
         specifier: ^0.24.0
-        version: 0.24.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)
+        version: 0.24.3(@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)
       '@effect/sql-drizzle':
         specifier: ^0.24.0
-        version: 0.24.2(@effect/sql@0.24.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(drizzle-orm@0.36.4(postgres@3.4.9))(effect@3.21.4)
+        version: 0.24.2(@effect/sql@0.24.3(@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(drizzle-orm@0.36.4(postgres@3.4.9))(effect@3.21.4)
       '@effect/sql-pg':
         specifier: ^0.24.0
-        version: 0.24.4(@effect/platform@0.71.7(effect@3.21.4))(@effect/sql@0.24.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(effect@3.21.4)
+        version: 0.24.4(@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(@effect/platform@0.71.7(effect@3.21.4))(@effect/sql@0.24.3(@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(effect@3.21.4)
       '@perminou/domain':
         specifier: workspace:*
         version: link:../domain
@@ -65,6 +71,25 @@ packages:
 
   '@drizzle-team/brocli@0.10.2':
     resolution: {integrity: sha512-z33Il7l5dKjUgGULTqBsQBQwckHh5AbIuxhdsIxDDiZAzBOrZO6q9ogcWC65kU382AfynTfgNumVcNIjuIua6w==}
+
+  '@effect/experimental@0.35.3':
+    resolution: {integrity: sha512-2SwBBD2sipLDzH1ZkITn5fbbFRpdxshylwwRPl8YK4lYptJkVEscSp9UoXV1FIya9/vIMqyZOo6bLwctOOdk3g==}
+    peerDependencies:
+      '@effect/platform': ^0.71.7
+      '@effect/platform-node': ^0.67.3
+      effect: ^3.11.10
+      ioredis: ^5
+      lmdb: ^3
+      ws: ^8
+    peerDependenciesMeta:
+      '@effect/platform-node':
+        optional: true
+      ioredis:
+        optional: true
+      lmdb:
+        optional: true
+      ws:
+        optional: true
 
   '@effect/platform@0.71.7':
     resolution: {integrity: sha512-Ttw8OhbcP1x5cPgcX4VdnDSWrskVdUrf9bO3eDd++TTcQzEiYVu9GZJaSMvz6Yqzfzt+1tIKoKi2jp6dLdJ9dg==}
@@ -549,6 +574,36 @@ packages:
 
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
+
+  '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.4':
+    resolution: {integrity: sha512-LCkGo6JDfaBhgST7UpPWgNgLINpcpabaHfyz5OBx75nUYxBsaEPxjnyNjWpeb/xBup/682QnBfRBy2/LvPutZQ==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@msgpackr-extract/msgpackr-extract-darwin-x64@3.0.4':
+    resolution: {integrity: sha512-zExlW9zUJKZH/tOtVMttwjKa4Xm/3KcNjnE3dPN92uCktwavMxpgCA3MoJK/DOnTWsQgo224OaST27/mPNAf+w==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@msgpackr-extract/msgpackr-extract-linux-arm64@3.0.4':
+    resolution: {integrity: sha512-dgX0P/9wGPJeHFBG+ZmhgE6bmtMt7NP5CRBGyyktpopdk/mW4POnrpQsSLtKI1dwpc+pPLuXHDh6vvskyQE/sw==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@msgpackr-extract/msgpackr-extract-linux-arm@3.0.4':
+    resolution: {integrity: sha512-Tg3yX65f5GbtXLkrYEHE5oibZG9epyYWas7FogTTEJeDEF9JlXJzKgXaNhT3UXlTOeA+AfZpYZYZ0uPj7Cfquw==}
+    cpu: [arm]
+    os: [linux]
+
+  '@msgpackr-extract/msgpackr-extract-linux-x64@3.0.4':
+    resolution: {integrity: sha512-8TNXMEjJc3QEy7R/x1INhgiU+XakDAFUzBhaz7+Rbrs8NH5UQeHQxxmzsSBJGyV6I1jW79undiQm8tOI+D+8FQ==}
+    cpu: [x64]
+    os: [linux]
+
+  '@msgpackr-extract/msgpackr-extract-win32-x64@3.0.4':
+    resolution: {integrity: sha512-CmCXPQrkbwExx3j946/PtHWHbYJiCRBRDl4BlkRQcJB/YOwQxJRTpoo7aTsortjgoJ1x7opzTSxn7C+ASSLVjQ==}
+    cpu: [x64]
+    os: [win32]
 
   '@opentelemetry/semantic-conventions@1.41.1':
     resolution: {integrity: sha512-/UhIkaZgPutTFmQ7RnIJGgDXZmtEJ7Dvi86xNTFWcnRxVRNk/aotsqDJYeEvDP+FSMB2SdW+pQzNMcWP0rwuNA==}
@@ -1052,6 +1107,10 @@ packages:
     resolution: {integrity: sha512-DtCOLG98P007x7wiiOmfI0fi3eIKyWiLTGJ2MDnVi/E04lWGbf+JzrRHMm0rgIIZJGtHpKpbVgLWHrv8xXpc3Q==}
     engines: {node: '>=0.10.0'}
 
+  detect-libc@2.1.2:
+    resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
+    engines: {node: '>=8'}
+
   dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
 
@@ -1494,6 +1553,13 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
+  msgpackr-extract@3.0.4:
+    resolution: {integrity: sha512-4kmO/MdyUIkLIvTPr8VHLil4AtoKIoniWPIEk5+CDy0xnWC84azhSFmuJ7PxZdsYtiP5kEeQsORAVIeMgxT+Hw==}
+    hasBin: true
+
+  msgpackr@1.12.1:
+    resolution: {integrity: sha512-4EUH9tQHnMmEgzW/MdAP0KIfa1T9AF+htl0ffe2n5vb2EKn9y2co8ccpgWko6S52Jy1PQZKwRnx5/KkYjtd9MQ==}
+
   multipasta@0.2.7:
     resolution: {integrity: sha512-KPA58d68KgGil15oDqXjkUBEBYc00XvbPj5/X+dyzeo/lWm9Nc25pQRlf1D+gv4OpK7NM0J1odrbu9JNNGvynA==}
 
@@ -1514,6 +1580,10 @@ packages:
 
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
+
+  node-gyp-build-optional-packages@5.2.2:
+    resolution: {integrity: sha512-s+w+rBWnpTMwSFbaE0UXsRlg7hU4FjekKU4eyAih5T8nJuNZT1nNsskXpxmeqSK9UzkBl6UgRlnKc8hz8IEqOw==}
+    hasBin: true
 
   node-plop@0.32.3:
     resolution: {integrity: sha512-tn+OxutdqhvoByKJ7p84FZBSUDfUB76bcvj0ugLBvgE9V52LFcnz8cauCDKi6otnctvFCqa9XkrU35pBY5Baig==}
@@ -2000,28 +2070,36 @@ snapshots:
 
   '@drizzle-team/brocli@0.10.2': {}
 
+  '@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)':
+    dependencies:
+      '@effect/platform': 0.71.7(effect@3.21.4)
+      effect: 3.21.4
+      msgpackr: 1.12.1
+
   '@effect/platform@0.71.7(effect@3.21.4)':
     dependencies:
       effect: 3.21.4
       find-my-way-ts: 0.1.6
       multipasta: 0.2.7
 
-  '@effect/sql-drizzle@0.24.2(@effect/sql@0.24.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(drizzle-orm@0.36.4(postgres@3.4.9))(effect@3.21.4)':
+  '@effect/sql-drizzle@0.24.2(@effect/sql@0.24.3(@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(drizzle-orm@0.36.4(postgres@3.4.9))(effect@3.21.4)':
     dependencies:
-      '@effect/sql': 0.24.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)
+      '@effect/sql': 0.24.3(@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)
       drizzle-orm: 0.36.4(postgres@3.4.9)
       effect: 3.21.4
 
-  '@effect/sql-pg@0.24.4(@effect/platform@0.71.7(effect@3.21.4))(@effect/sql@0.24.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(effect@3.21.4)':
+  '@effect/sql-pg@0.24.4(@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(@effect/platform@0.71.7(effect@3.21.4))(@effect/sql@0.24.3(@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(effect@3.21.4)':
     dependencies:
+      '@effect/experimental': 0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)
       '@effect/platform': 0.71.7(effect@3.21.4)
-      '@effect/sql': 0.24.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)
+      '@effect/sql': 0.24.3(@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)
       '@opentelemetry/semantic-conventions': 1.41.1
       effect: 3.21.4
       postgres: 3.4.9
 
-  '@effect/sql@0.24.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)':
+  '@effect/sql@0.24.3(@effect/experimental@0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4))(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)':
     dependencies:
+      '@effect/experimental': 0.35.3(@effect/platform@0.71.7(effect@3.21.4))(effect@3.21.4)
       '@effect/platform': 0.71.7(effect@3.21.4)
       '@opentelemetry/semantic-conventions': 1.41.1
       effect: 3.21.4
@@ -2282,6 +2360,24 @@ snapshots:
   '@jridgewell/sourcemap-codec@1.5.5': {}
 
   '@js-sdsl/ordered-map@4.4.2': {}
+
+  '@msgpackr-extract/msgpackr-extract-darwin-arm64@3.0.4':
+    optional: true
+
+  '@msgpackr-extract/msgpackr-extract-darwin-x64@3.0.4':
+    optional: true
+
+  '@msgpackr-extract/msgpackr-extract-linux-arm64@3.0.4':
+    optional: true
+
+  '@msgpackr-extract/msgpackr-extract-linux-arm@3.0.4':
+    optional: true
+
+  '@msgpackr-extract/msgpackr-extract-linux-x64@3.0.4':
+    optional: true
+
+  '@msgpackr-extract/msgpackr-extract-win32-x64@3.0.4':
+    optional: true
 
   '@opentelemetry/semantic-conventions@1.41.1': {}
 
@@ -2722,6 +2818,9 @@ snapshots:
 
   detect-file@1.0.0: {}
 
+  detect-libc@2.1.2:
+    optional: true
+
   dlv@1.1.3: {}
 
   docker-compose@0.24.8:
@@ -3132,6 +3231,22 @@ snapshots:
 
   ms@2.1.3: {}
 
+  msgpackr-extract@3.0.4:
+    dependencies:
+      node-gyp-build-optional-packages: 5.2.2
+    optionalDependencies:
+      '@msgpackr-extract/msgpackr-extract-darwin-arm64': 3.0.4
+      '@msgpackr-extract/msgpackr-extract-darwin-x64': 3.0.4
+      '@msgpackr-extract/msgpackr-extract-linux-arm': 3.0.4
+      '@msgpackr-extract/msgpackr-extract-linux-arm64': 3.0.4
+      '@msgpackr-extract/msgpackr-extract-linux-x64': 3.0.4
+      '@msgpackr-extract/msgpackr-extract-win32-x64': 3.0.4
+    optional: true
+
+  msgpackr@1.12.1:
+    optionalDependencies:
+      msgpackr-extract: 3.0.4
+
   multipasta@0.2.7: {}
 
   mute-stream@1.0.0: {}
@@ -3146,6 +3261,11 @@ snapshots:
       picocolors: 1.1.1
 
   neo-async@2.6.2: {}
+
+  node-gyp-build-optional-packages@5.2.2:
+    dependencies:
+      detect-libc: 2.1.2
+    optional: true
 
   node-plop@0.32.3(@types/node@26.1.0):
     dependencies:
