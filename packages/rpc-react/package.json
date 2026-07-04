@@ -1,0 +1,24 @@
+{
+  "name": "@perminou/rpc-react",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "dependencies": {
+    "effect": "^3.14.0",
+    "@effect/rpc": "^0.75.1",
+    "@effect/platform": "^0.96.1",
+    "@perminou/rpc-contract": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.0",
+    "@testcontainers/postgresql": "^10.13.0",
+    "@perminou/backend": "workspace:*",
+    "@perminou/db": "workspace:*",
+    "@perminou/domain": "workspace:*",
+    "@hono/node-server": "^2.0.8"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

@@ -199,6 +199,40 @@ importers:
         specifier: ^3.14.0
         version: 3.21.4
 
+  packages/rpc-react:
+    dependencies:
+      '@effect/platform':
+        specifier: ^0.96.1
+        version: 0.96.2(effect@3.21.4)
+      '@effect/rpc':
+        specifier: ^0.75.1
+        version: 0.75.1(@effect/platform@0.96.2(effect@3.21.4))(effect@3.21.4)
+      '@perminou/rpc-contract':
+        specifier: workspace:*
+        version: link:../rpc-contract
+      effect:
+        specifier: ^3.14.0
+        version: 3.21.4
+    devDependencies:
+      '@hono/node-server':
+        specifier: ^2.0.8
+        version: 2.0.8(hono@4.12.27)
+      '@perminou/backend':
+        specifier: workspace:*
+        version: link:../../apps/backend
+      '@perminou/db':
+        specifier: workspace:*
+        version: link:../db
+      '@perminou/domain':
+        specifier: workspace:*
+        version: link:../domain
+      '@testcontainers/postgresql':
+        specifier: ^10.13.0
+        version: 10.28.0
+      tsx:
+        specifier: ^4.23.0
+        version: 4.23.0
+
 packages:
 
   '@alloc/quick-lru@5.2.0':
