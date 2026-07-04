@@ -77,8 +77,9 @@ You fill only the logic; the file-shape, imports, and export-wiring are generate
 | Monorepo scaffold, `packages/domain` (entities, ports) | ✅ built, tested |
 | plop generators | ✅ ready |
 | `packages/db` (Postgres schema + `QuestionRepository`) | ✅ built, tested (Testcontainers) |
-| Scraper | 🔜 blocked on the answers-in-DOM spike ([ADR 0002](docs/adr/0002-hybrid-scraping-engine.md)) |
-| Backend / rpc-react / mobile | 🔜 planned |
+| `apps/mobile` prototype (static samples, real media) | ✅ runnable demo (`cd apps/mobile && npx expo start`) |
+| Scraper | 🔜 Plan 5 — spike complete, [ADR 0002](docs/adr/0002-hybrid-scraping-engine.md) finalized |
+| Backend / rpc-react / real mobile app | 🔜 planned |
 
 ## Documentation
 
