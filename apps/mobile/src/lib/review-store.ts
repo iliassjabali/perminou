@@ -13,6 +13,12 @@ export interface KeyValueStorage {
 /** Storage key the review set is persisted under, unless overridden. */
 export const REVIEW_SET_KEY = 'perminou-review-set';
 
+// Separate from `@perminou/rpc-react/native`'s query-cache MMKV instance
+// (`perminou-rpc-react-cache`) — this one holds only the small "review later" id list, not the
+// question bank cache. Shared by `PracticeScreen` (writes), `HomeScreen` (reads the count), and
+// `ReviewScreen` (reads the ids) so they all point at the same on-device MMKV instance.
+export const REVIEW_STORE_ID = 'perminou-review-store';
+
 export interface ReviewStore {
   /** Ids swiped left, in the order they were first added. */
   readonly getIds: () => readonly string[];

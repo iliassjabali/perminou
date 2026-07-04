@@ -3,23 +3,53 @@ import './global.css';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PerminouRpcReactProvider } from '@perminou/rpc-react/native';
 
+import { HomeScreen } from './src/screens/HomeScreen';
 import { PracticeScreen } from './src/screens/PracticeScreen';
+import { ExamScreen } from './src/screens/ExamScreen';
+import { ReviewScreen } from './src/screens/ReviewScreen';
+import type { RootStackParamList } from './src/navigation/types';
 
-// Perminou — Plan 4, Task 3: the real swipeable Practice deck is now the app's main screen,
-// replacing Task 1's placeholder `QuizScreen` list. `EXPO_PUBLIC_API_URL` is the backend host;
-// the `@effect/rpc` endpoint itself is mounted at `/rpc` (see apps/backend/src/http.ts), appended
-// below. `GestureHandlerRootView` must wrap the whole app exactly once, at the root, for
+// Perminou — Plan 4, Task 4: `HomeScreen`'s menu (Practice / Mock Exam / Review) is now the app's
+// entry point, replacing Task 3's direct-to-`PracticeScreen` wiring. Navigation is a minimal
+// `@react-navigation/native-stack` (over `expo-router`) — this app has only four flat screens and
+// no route params, so the stack avoids expo-router's extra entry-point/babel/metro restructuring
+// for no real UX benefit here. `EXPO_PUBLIC_API_URL` is the backend host; the `@effect/rpc`
+// endpoint itself is mounted at `/rpc` (see apps/backend/src/http.ts), appended below.
+// `GestureHandlerRootView` must wrap the whole app exactly once, at the root, for
 // `react-native-gesture-handler` (the deck's swipe gestures) to work at all.
 const API_HOST = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3000';
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <PerminouRpcReactProvider baseUrl={`${API_HOST}/rpc`}>
-          <PracticeScreen />
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen
+                name="Practice"
+                component={PracticeScreen}
+                options={{ headerShown: true, title: 'Practice' }}
+              />
+              <Stack.Screen
+                name="Exam"
+                component={ExamScreen}
+                options={{ headerShown: true, title: 'Mock Exam' }}
+              />
+              <Stack.Screen
+                name="Review"
+                component={ReviewScreen}
+                options={{ headerShown: true, title: 'Review' }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
         </PerminouRpcReactProvider>
         <StatusBar style="auto" />
       </SafeAreaProvider>

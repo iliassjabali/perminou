@@ -11,11 +11,7 @@ import { MMKV } from 'react-native-mmkv';
 
 import { Deck } from '../features/deck/Deck';
 import { useDeck } from '../features/deck/use-deck';
-import { createReviewStore } from '../lib/review-store';
-
-// Separate from `@perminou/rpc-react/native`'s query-cache MMKV instance (`perminou-rpc-react-cache`)
-// — this one holds only the small "review later" id list, not the question bank cache.
-const REVIEW_STORE_ID = 'perminou-review-store';
+import { createReviewStore, REVIEW_STORE_ID } from '../lib/review-store';
 
 export function PracticeScreen() {
   const { questions, isLoading, error } = useDeck('practice');

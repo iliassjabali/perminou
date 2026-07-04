@@ -7,7 +7,7 @@
 // a `react-native-gesture-handler` pan gesture animated with `react-native-reanimated`, and
 // renders `QuestionCard`s. The gesture/animation wiring itself isn't unit-testable under jsdom —
 // it's verified by `expo export` bundling cleanly (Plan 4 Task 3 acceptance).
-import { useCallback, useReducer } from 'react';
+import { useCallback, useEffect, useReducer } from 'react';
 import { Text, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
@@ -28,6 +28,17 @@ export interface DeckProps {
   readonly lang: Lang;
   /** Called once per left-swiped question, with its id (Task 3 persists these via a review store). */
   readonly onReview?: (id: string) => void;
+  /**
+   * Called once per validated question (Task 4's `ExamScreen` tallies a score from this — see
+   * `QuestionCard`'s own `onAnswered`, which fires on "Valider", not on swipe).
+   */
+  readonly onAnswered?: (id: string, correct: boolean) => void;
+  /**
+   * Called once, the render after the deck's progress first reports `done` (Task 4's
+   * `ExamScreen` swaps in its own score-summary view in response, replacing this generic "Deck
+   * complete" one).
+   */
+  readonly onComplete?: () => void;
 }
 
 /** Horizontal drag distance (px) past which a release counts as a swipe rather than a snap-back. */
@@ -38,11 +49,19 @@ function swipeReducer(state: DeckState, action: { direction: SwipeDirection; id:
   return swipeDeck(state, action.direction, action.id);
 }
 
-export function Deck({ questions, lang, onReview }: DeckProps) {
+export function Deck({ questions, lang, onReview, onAnswered, onComplete }: DeckProps) {
   const [state, dispatch] = useReducer(swipeReducer, undefined, initialDeckState);
   const total = questions.length;
   const progress = deckProgress(state, total);
   const translateX = useSharedValue(0);
+
+  // Fires once per deck (not once per re-render) — `deckProgress`'s `done` only flips true->true
+  // again on subsequent renders while exhausted, so this effect's dependency guards against
+  // calling `onComplete` more than once for the same exhaustion.
+  useEffect(() => {
+    if (progress.done && total > 0) onComplete?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progress.done]);
 
   // Runs on the JS thread (via `runOnJS` from the gesture's UI-thread worklet): records the
   // review id (if any) as a side effect, then advances the pure reducer, then resets the
@@ -106,7 +125,11 @@ export function Deck({ questions, lang, onReview }: DeckProps) {
       </View>
       <GestureDetector gesture={gesture}>
         <Animated.View testID="deck-card" style={[{ flex: 1 }, cardStyle]}>
-          <QuestionCard question={current} lang={lang} />
+          <QuestionCard
+            question={current}
+            lang={lang}
+            onAnswered={onAnswered ? (correct) => onAnswered(current.id, correct) : undefined}
+          />
         </Animated.View>
       </GestureDetector>
     </View>
