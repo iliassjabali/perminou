@@ -614,6 +614,58 @@ git commit -m "feat(db): QuestionRepository drizzle adapter via @effect/sql-driz
 
 ---
 
+### Task 6: Scaffolding generators (plop)
+
+**Files:**
+- Modify: `package.json` (add `plop` devDep + `plop` script)
+- Modify: `packages/domain/src/index.ts` (add the `/* plop:entity-export */` marker)
+- Present already: `plopfile.mjs` at repo root (generators: feature / entity / screen).
+
+**Interfaces:**
+- Produces: `pnpm plop <feature|entity|screen>` works; the `entity` generator auto-exports via the domain barrel marker.
+
+- [ ] **Step 1: Add plop to the root package.json**
+
+Add to `scripts`: `"plop": "plop"`. Add to `devDependencies`: `"plop": "^4.0.0"`.
+
+- [ ] **Step 2: Add the entity-export marker to the domain barrel**
+
+```ts
+// packages/domain/src/index.ts
+export * from './ids';
+export * from './entities';
+export * from './ports';
+/* plop:entity-export */
+```
+
+- [ ] **Step 3: Install**
+
+Run: `pnpm install`
+Expected: `plop` resolves.
+
+- [ ] **Step 4: Verify the entity generator**
+
+Run: `pnpm plop entity` → name `ScaffoldSmoke`
+Expected: creates `packages/domain/src/entities/scaffold-smoke.ts` + `packages/domain/test/scaffold-smoke.test.ts`, and appends `export * from './entities/scaffold-smoke';` after the marker in `index.ts`.
+
+- [ ] **Step 5: Remove the throwaway, keep the wiring**
+
+```bash
+rm packages/domain/src/entities/scaffold-smoke.ts packages/domain/test/scaffold-smoke.test.ts
+git checkout packages/domain/src/index.ts   # drop the appended smoke export; keep the marker
+```
+
+- [ ] **Step 6: Commit**
+
+```bash
+git add -A
+git commit -m "chore: add plop generators (feature/entity/screen) + verify entity generator"
+```
+
+> The `feature` and `screen` generators target packages created in later plans (`rpc-contract`, `backend`, `mobile`); they're verified there.
+
+---
+
 ## Self-Review
 
 **Spec coverage:** Foundation (monorepo, Task 1) ✓ · domain entities/schema (Tasks 2–3, spec §4) ✓ · `packages/db` shared schema + `QuestionRepository` port/adapter (Tasks 3–5, spec §3 table) ✓ · Testcontainers strategy (Tasks 4–5, spec §7) ✓. Out of this plan's scope by design: scraper (Plan 5, spike-blocked), backend rpc (Plan 2), rpc-react (Plan 3), mobile (Plan 4), exams (added when backend needs them).

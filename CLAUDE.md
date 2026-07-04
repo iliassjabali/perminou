@@ -44,7 +44,8 @@ docs/adr/        # architecture decision records
 2. **Tests never hit live NARSA.** The site is quarantined behind the `SourceGateway` port and fed recorded fixtures. The only live-touching check is the opt-in **drift test** (not in `pnpm test`).
 3. **Scraper is gentle & resilient.** Bounded concurrency + backoff (`Schedule`), resource-safe browsers (`Scope`), resumable/idempotent, fail-loud typed errors, **survives session expiry** (re-auth on redirect-to-signin).
 4. **Offline capability = cache, not bundle.** The app is online; react-query persistence + a first-launch prefetch provide offline use of already-fetched content. Do not reintroduce an on-device dataset/bundle without an ADR.
-5. **Open question to resolve first:** are quiz answers in the DOM or only revealed after submitting? Decides scraper complexity — spike before building (ADR 0002). Any HTML selectors in the skills are **unverified examples** until the spike confirms them.
+5. **Scaffold, don't hand-write boilerplate.** Before creating a new backend feature, domain entity, or mobile screen, run `pnpm plop` (see `perminou-scaffolding`). Hand-writing the file-shape is the exception. The only code you write by hand is the logic that fills the generated `// TODO`s.
+6. **Open question to resolve first:** are quiz answers in the DOM or only revealed after submitting? Decides scraper complexity — spike before building (ADR 0002). Any HTML selectors in the skills are **unverified examples** until the spike confirms them.
 
 ## Commands (target — adjust as scaffolding lands)
 
@@ -56,10 +57,12 @@ pnpm --filter scraper drift   # opt-in drift test against the live site (allowed
 pnpm --filter scraper scrape  # run the scrape → write into Postgres
 pnpm --filter db migrate      # drizzle-kit migrations
 pnpm --filter mobile start    # Expo dev server
+pnpm plop <feature|entity|screen>  # scaffold boilerplate (see perminou-scaffolding)
 ```
 
 ## Skills for this repo (`.claude/skills/`)
 
+- **perminou-scaffolding** — `pnpm plop` generators. Read BEFORE hand-writing a new feature/entity/screen.
 - **perminou-effect** — Tag/Layer/typed-errors, Schedule, Scope, Schema, @effect/rpc bridge. Read first for any Effect code.
 - **perminou-architecture** — monorepo layout, ports & adapters, online @effect/rpc API + rpc-react client.
 - **perminou-scraping** — hybrid engine, `SourceGateway`, session re-auth, fixtures, drift test.

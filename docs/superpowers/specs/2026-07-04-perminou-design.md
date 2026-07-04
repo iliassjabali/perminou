@@ -73,6 +73,9 @@ Vitest everywhere; TDD red-green-refactor. **No test hits live NARSA** — it's 
 
 ## 9. Build order (high level — detailed plan comes from writing-plans)
 
+> Boilerplate is **generated with plop** (`pnpm plop feature|entity|screen`, see `perminou-scaffolding`) — only logic is hand-written. Scaffold-first is a project rule (CLAUDE.md).
+
+
 1. Scaffold monorepo (pnpm + Turborepo), `packages/domain` + Effect Schema for the data model.
 2. **Scraping spike** → resolve open question #1, record selectors.
 3. `packages/db` schema + migrations; `apps/scraper` behind `SourceGateway` with fixtures; upsert to Postgres.
