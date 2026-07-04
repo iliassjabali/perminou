@@ -2,7 +2,7 @@
 // NARSA site. Not unit-tested directly (see the opt-in drift test, Task 8);
 // this file must stay typecheck-clean and is exercised manually via
 // `scripts/capture-fixtures.ts` and, later, the drift test.
-import { Effect, Layer } from 'effect';
+import { Effect, Layer, Schedule, Duration } from 'effect';
 import { chromium, type Page } from 'playwright';
 import {
   SourceGateway,
@@ -47,6 +47,14 @@ const make = Effect.gen(function* () {
     (c) => Effect.promise(() => c.close()),
   );
 
+  // The exam is a STATEFUL flow: we navigate to the exam URL once per exam, then
+  // "Valider" advances question-to-question in place. Re-navigating per question
+  // both disrupts that state and hammers the site (→ ERR_CONNECTION_RESET). Track
+  // whether an exam is currently in progress so we only goto at the start of one.
+  let examInProgress = false;
+  // Gentle backoff for transient navigation errors (network resets etc.).
+  const gotoRetry = Schedule.exponential(Duration.seconds(1)).pipe(Schedule.compose(Schedule.recurs(3)));
+
   const login = () =>
     Effect.gen(function* () {
       const page = yield* Effect.tryPromise({
@@ -85,10 +93,18 @@ const make = Effect.gen(function* () {
   const nextExamQuestion = (s: Session) =>
     Effect.gen(function* () {
       const { page } = asPlaywrightSession(s);
-      yield* Effect.tryPromise({
-        try: () => page.goto(EXAM_URL, { waitUntil: 'domcontentloaded' }),
-        catch: (cause) => new FetchError({ url: EXAM_URL, cause }),
-      });
+      // Only navigate at the START of an exam; within an exam "Valider" already
+      // moved us to the current question, so we just read the page in place.
+      if (!examInProgress) {
+        yield* Effect.tryPromise({
+          try: () => page.goto(EXAM_URL, { waitUntil: 'domcontentloaded' }),
+          catch: (cause) => new FetchError({ url: EXAM_URL, cause }),
+        }).pipe(
+          Effect.retry(gotoRetry),
+          Effect.tapError(() => Effect.sync(() => { examInProgress = false; })),
+        );
+        examInProgress = true;
+      }
       yield* assertNotSignedOut(page);
       const html = yield* Effect.promise(() => page.content());
       const question: RawQuestion = yield* parseQuestionHtml(html, EXAM_URL).pipe(
@@ -109,11 +125,17 @@ const make = Effect.gen(function* () {
           await page.waitForLoadState('domcontentloaded');
           await new Promise((r) => setTimeout(r, 350)); // gentle: don't hammer the gov service
         },
+        // Not retried: re-clicking Valider would double-submit. A failure abandons
+        // the exam (reset the flag so the next question starts a fresh one).
         catch: (cause) => new FetchError({ url: EXAM_URL, cause }),
-      });
+      }).pipe(Effect.tapError(() => Effect.sync(() => { examInProgress = false; })));
       yield* assertNotSignedOut(page);
       const remaining = yield* Effect.promise(() => page.locator('input[name="answers"]').count());
-      return remaining > 0 ? ('more' as const) : ('done' as const);
+      if (remaining === 0) {
+        examInProgress = false; // exam finished — next nextExamQuestion starts fresh
+        return 'done' as const;
+      }
+      return 'more' as const;
     });
 
   const fetchCorrection = (s: Session) =>
