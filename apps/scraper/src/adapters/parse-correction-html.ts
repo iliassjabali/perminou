@@ -25,7 +25,8 @@ import type { RawCorrection } from '../domain/ports/source-gateway';
 
 const MODAL_SELECTOR = 'div[id^="questionModal_"]';
 const IMAGE_SELECTOR = 'img[id^="modalQuestionImage_"]';
-const QUESTION_ID = /\/media\/uploads\/questions\/images\/[a-z]+\/([A-Za-z0-9]+)\.png/;
+// Question images are served as .png, .gif, or .jpg/.jpeg.
+const QUESTION_ID = /\/media\/uploads\/questions\/images\/[a-z]+\/([A-Za-z0-9]+)\.(?:png|gif|jpe?g)/;
 const CORRECT_INDEX = /^(\d+)\s*:/;
 
 export const parseCorrectionHtml = (html: string, url = 'exam-correction') =>
@@ -38,18 +39,15 @@ export const parseCorrectionHtml = (html: string, url = 'exam-correction') =>
       );
     }
 
-    const correctByQuestion: Record<number, number[]> = {};
+    const correctByQuestion: Record<string, number[]> = {};
     for (const modal of modals) {
       const imgSrc = $(modal).find(IMAGE_SELECTOR).attr('src');
       const idMatch = imgSrc?.match(QUESTION_ID);
       if (!idMatch) continue; // malformed slot — skip rather than fail the whole batch
-      const id = Number(idMatch[1]);
       // A handful of ids are alphanumeric (e.g. "IS014", "ISR003") — a
-      // special-signage sub-bank the numeric-id domain model can't represent
-      // yet. They can never join back to a numeric RawQuestion.id, so they
-      // are intentionally skipped here (not a shape error: the rest of the
-      // correction is well-formed).
-      if (!Number.isFinite(id)) continue;
+      // special-signage sub-bank. QuestionId is a non-empty string, so these
+      // join back to RawQuestion.id like any other id; keep them.
+      const id = idMatch[1]!;
 
       const indices = $(modal)
         .find('.modal-answer .fw-bold1')

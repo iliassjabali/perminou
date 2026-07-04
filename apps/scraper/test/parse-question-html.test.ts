@@ -10,7 +10,7 @@ const html = readFileSync(path.join(__dirname, '../fixtures/exam-question.html')
 
 test('extracts id, category, media flags, and answers from a recorded exam question', async () => {
   const q = await Effect.runPromise(parseQuestionHtml(html));
-  expect(q.id).toBe(100);
+  expect(q.id).toBe('100');
   expect(q.category).toBe('B');
   expect(q.hasImage).toBe(true);
   expect(q.hasAudio).toBe(true);
@@ -23,4 +23,27 @@ test('extracts id, category, media flags, and answers from a recorded exam quest
 test('fails typed when no question id can be found in the media urls', async () => {
   const exit = await Effect.runPromiseExit(parseQuestionHtml('<html><body>no media here</body></html>'));
   expect(exit._tag).toBe('Failure');
+});
+
+test('keeps an alphanumeric signage question id instead of failing loud', async () => {
+  const signageHtml = `<html><body>
+    <img src="/media/uploads/questions/images/fr/IS014.png">
+    <div class="categorie-content"><span class="font-text">B</span></div>
+    <input name="answers" value="1">
+    <input name="answers" value="2">
+  </body></html>`;
+  const q = await Effect.runPromise(parseQuestionHtml(signageHtml));
+  expect(q.id).toBe('IS014');
+});
+
+test('matches a .gif question image and extracts the id before the extension', async () => {
+  const gifHtml = `<html><body>
+    <img src="/media/uploads/questions/images/fr/234.gif">
+    <div class="categorie-content"><span class="font-text">B</span></div>
+    <input name="answers" value="1">
+    <input name="answers" value="2">
+  </body></html>`;
+  const q = await Effect.runPromise(parseQuestionHtml(gifHtml));
+  expect(q.id).toBe('234');
+  expect(q.hasImage).toBe(true);
 });
