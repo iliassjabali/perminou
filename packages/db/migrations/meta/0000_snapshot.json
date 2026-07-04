@@ -1,5 +1,5 @@
 {
-  "id": "2e3a97b1-6dbe-453f-906c-436ffc1301e8",
+  "id": "14ba8597-eb04-48f2-8d15-cbca3f258d40",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -10,7 +10,7 @@
       "columns": {
         "question_id": {
           "name": "question_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -69,7 +69,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },

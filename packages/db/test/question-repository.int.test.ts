@@ -15,7 +15,7 @@ beforeAll(async () => {
 afterAll(async () => { await container.stop(); });
 
 test('upsert is idempotent by NARSA id and replaces answers', async () => {
-  const q = { id: 565, category: 'B', hasImage: true, hasAudio: true,
+  const q = { id: '565', category: 'B', hasImage: true, hasAudio: true,
     answers: [ { narsaId: 933, index: 1, correct: true }, { narsaId: 934, index: 2, correct: false } ] };
   const program = Effect.gen(function* () {
     const repo = yield* QuestionRepository;
@@ -27,4 +27,16 @@ test('upsert is idempotent by NARSA id and replaces answers', async () => {
   expect(rows).toHaveLength(1);                      // idempotent
   expect(rows[0]!.answers).toHaveLength(1);          // answers replaced
   expect(rows[0]!.answers[0]!.correct).toBe(false);  // updated
+});
+
+test('persists alphanumeric signage question ids (e.g. IS014)', async () => {
+  const q = { id: 'IS014', category: 'B', hasImage: true, hasAudio: false,
+    answers: [ { narsaId: 1, index: 1, correct: true }, { narsaId: 2, index: 2, correct: false } ] };
+  const program = Effect.gen(function* () {
+    const repo = yield* QuestionRepository;
+    yield* repo.upsertQuestion(q as never);
+    return yield* repo.questionsByCategory('B');
+  });
+  const rows = await Effect.runPromise(program.pipe(Effect.provide(QuestionRepositoryLive(uri))));
+  expect(rows.map((r) => r.id)).toContain('IS014');
 });

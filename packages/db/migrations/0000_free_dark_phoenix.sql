@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS "answers" (
-	"question_id" integer NOT NULL,
+	"question_id" text NOT NULL,
 	"narsa_id" integer NOT NULL,
 	"index" integer NOT NULL,
 	"correct" boolean NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS "answers" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "questions" (
-	"id" integer PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"category" text NOT NULL,
 	"has_image" boolean NOT NULL,
 	"has_audio" boolean NOT NULL
