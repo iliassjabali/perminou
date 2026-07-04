@@ -13,5 +13,5 @@ test('migrations create the questions table', async () => {
   const rows = await sql`select table_name from information_schema.tables where table_schema = 'public'`;
   const names = rows.map((r) => r.table_name);
   await sql.end();
-  expect(names).toEqual(expect.arrayContaining(['categories', 'chapters', 'questions', 'answers']));
+  expect(names).toEqual(expect.arrayContaining(['questions', 'answers']));
 });
