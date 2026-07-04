@@ -38,7 +38,7 @@ const GENTLE_DELAY_MS = 400;
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-/** Scrub CSRF token values, the user's display name, and the literal username from captured HTML. */
+/** Scrub CSRF token values, the user's display name, the account id, and the literal username from captured HTML. */
 function scrub(html: string, username: string | undefined): string {
   let out = html.replace(
     /<input\b[^>]*name=["']csrfmiddlewaretoken["'][^>]*>/gi,
@@ -46,6 +46,8 @@ function scrub(html: string, username: string | undefined): string {
   );
   // "Bonjour" greeting followed by the user's display name (up to the next tag).
   out = out.replace(/Bonjour\s*:?\s*[^<\n]+/gi, 'Bonjour : SCRUBBED');
+  // Internal account id embedded in links/paths, e.g. "/accounts/1234/".
+  out = out.replace(/\/accounts\/\d+\//g, '/accounts/SCRUBBED/');
   if (username) {
     out = out.split(username).join('SCRUBBED');
   }
