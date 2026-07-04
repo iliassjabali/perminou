@@ -239,10 +239,16 @@ export * from './ports';
 
 > Note: `index.ts` re-exports `./ports` (Task 3). Create an empty `packages/domain/src/ports.ts` now (`export {};`) so this compiles; Task 3 fills it in.
 
+Also **delete the Task 1 placeholder smoke test** — its wiring check is now covered by the real entity tests, and this new `index.ts` no longer exports `hello`:
+
+```bash
+rm packages/domain/test/smoke.test.ts
+```
+
 - [ ] **Step 4: Run tests to verify they pass**
 
 Run: `pnpm test packages/domain`
-Expected: PASS (3 entity tests + the smoke test).
+Expected: PASS (3 entity tests; the smoke test is gone).
 
 - [ ] **Step 5: Commit**
 
