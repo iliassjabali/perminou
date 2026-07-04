@@ -1,3 +1,12 @@
+// Hermes polyfills — MUST be the first thing evaluated, before any other import (including
+// `expo`/`App`). `@effect/rpc`'s client (via `@perminou/rpc-react`) reads `crypto.getRandomValues`
+// at module-eval time; Hermes on RN 0.86 doesn't provide it, so importing the polyfill any later
+// (e.g. inside a screen) is a silent no-op. See `packages/rpc-react/README.md` ("Hermes
+// polyfills"). `TextEncoder`/`TextDecoder` are NOT polyfilled here — Hermes has shipped both
+// natively since well before RN 0.86; re-verify against this SDK's release notes if the rpc
+// client throws a ReferenceError for either at runtime.
+import 'react-native-get-random-values';
+
 import { registerRootComponent } from 'expo';
 
 import App from './App';
