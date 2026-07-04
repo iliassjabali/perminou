@@ -1,29 +1,38 @@
-# 0002 — Hybrid scraping engine (Playwright + HTTP)
+# 0002 — Scraping engine (Playwright-primary) + public-media HTTP
 
-**Status:** Accepted — with one open spike
+**Status:** Accepted — spike complete (2026-07-04). One implementation detail (exact correction markup) deferred to Plan 5.
 
 ## Context
 
-`perminou.narsa.gov.ma` is a **Django server-rendered site** behind **session-cookie auth**, bilingual (fr/ar). Recon found: no JSON API/SPA; JS-constructed links; an incomplete TLS cert chain; and **short-lived sessions** (observed lapse within ~30 min → redirect to `/accounts/signin/`). One question is unresolved: **are correct answers in the page HTML, or only revealed after submitting a quiz?**
+`perminou.narsa.gov.ma` is a **Django server-rendered PWA** behind **session-cookie auth**, bilingual (fr/ar), buggy and fragile. The 2026-07-04 spike (driving the live site on a logged-in session) settled the open questions.
+
+## Spike findings (confirmed)
+
+- **No API.** No JSON endpoint; a guessed per-question route returns 404. Content is server-rendered HTML only.
+- **Question model:** each question has a **numeric ID**. The prompt and answer *meaning* live in an **image** (`.png`) and/or **audio** (`.mp3`); the on-page "answers" are **numbered checkboxes (2–4, multi-select)** with their own DB IDs. A question may be image-only (146), image+audio (565), or audio-only (800).
+- **Media is PUBLIC** (no auth): `/media/uploads/questions/{images|son}/{fr|ar}/{id}.{png|mp3}`, per language, ~0.5 MB images / ~0.2 MB audio. IDs are **sparse** (not every integer is a question).
+- **Correct answers are NOT in the DOM.** They're revealed only by completing the exam (submit each with "Valider", then the correction). Exact correction markup → captured in Plan 5 with Playwright.
+- **No deterministic listing.** The per-chapter links are broken (raw Django URL-regex leaks into `href`). The only enumerator is **Examen Blanc**: 1 random question per load, 40 per exam, "Valider" POSTs to advance.
+- **PWA service worker** serves an "offline template" fallback under bursty requests → the scraper must run with **service workers disabled**.
+- **Sessions are short-lived** (~30 min) → re-auth on redirect-to-signin.
+- **Auth scope:** only the *exam pages* need the session; **media is fetched anonymously over HTTP**.
 
 ## Decision
 
-A **hybrid engine**, all behind one `SourceGateway` port (Effect `Context.Tag`):
-- **Playwright** (real Chromium) — login, session capture, JS-built links, and *submitting quizzes to reveal answers* if needed.
-- **HTTP** (got + cheerio) with the captured cookie — fast bulk page/image pulls.
-
-Written in **TypeScript/Effect** (in-stack, shared domain types). Detects redirect-to-signin → raises `SessionExpired` → re-auths via Playwright → resumes. Gentle (bounded concurrency + `Schedule` backoff), resource-safe (`Scope`), idempotent (upsert by source key), writes into Postgres.
-
-**Open spike (do first):** determine answers-in-DOM vs post-submit; record the real selectors here; then update the `perminou-scraping` skill (its selectors are currently unverified placeholders).
+**Playwright-primary**, behind the `SourceGateway` port, service workers disabled:
+- **Playwright** (real Chromium, logged in via `.env` creds): drive the Examen Blanc loop — read each question (id from its media URL + answer option IDs), submit, and parse the correction for the correct answer set. **Loop-until-dry**: repeat exams, dedup by question ID, stop after K consecutive exams add nothing new.
+- **Public HTTP** (got): fetch each discovered question's image + audio for **both** `fr` and `ar` by ID — no session needed.
+- Upsert into Postgres keyed on the **NARSA numeric question ID** (stable identity — this also resolves the upsert-idempotency concern from ADR 0006's review).
 
 ## Consequences
 
-- Robust to auth, JS, flaky TLS, and session expiry.
-- Slower than pure HTTP, but it's an occasional batch job — acceptable.
-- Tests use recorded fixtures via `SourceGatewayFixture`; a separate opt-in drift test is the only live-touching check.
+- Full-bank coverage is **statistical** (loop-until-dry), not a guaranteed 100% — the price of no API/listing. `log()` the saturation curve so coverage is visible.
+- Media step is trivial and cheap (public, cacheable).
+- The scraper is stateful and slow (drives a real exam UI), but it's an occasional batch job.
+- Tests use recorded fixtures (`SourceGatewayFixture`); the opt-in drift test is the only live-touching check.
 
 ## Alternatives rejected
 
-- **HTTP-only** — brittle against auth refresh, JS-built links, and answer-reveal.
-- **Headless-only** — robust but needlessly slow for bulk static pages.
-- **Python (Scrapy/Playwright)** — capable, but a second language outside the TS/Effect stack; no shared domain types.
+- **HTTP-only** — can't drive the JS/PWA exam flow or the correction reveal.
+- **Enumerate media by ID `1..N`** — finds media but not question text/answers/correctness, and IDs are sparse (mostly 404s).
+- **Python (Scrapy/Playwright)** — capable, but a second language outside the TS/Effect stack.

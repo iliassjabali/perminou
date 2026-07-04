@@ -11,24 +11,25 @@ The source (`perminou.narsa.gov.ma`) is a **Django server-rendered site** behind
 
 **Core principle:** the live site is the enemy of determinism. Quarantine it behind **one port** (`SourceGateway`, a `Context.Tag`). Everything downstream (normalization, persistence) operates on captured bytes, never the network — pure and unit-testable by providing a fixture `Layer`.
 
-> ⚠️ **The HTML selectors in this skill are UNVERIFIED EXAMPLES.** No scraping spike has run yet, so `[data-question-text]`, `[data-correct]`, etc. are placeholders illustrating shape — NOT confirmed selectors. Resolve the real DOM structure via the spike (below) before trusting any of them.
+> ✅ **Structure confirmed by the 2026-07-04 spike** (see ADR 0002). Key facts below are real, not placeholders. The one remaining detail — the exact HTML markup of the *correction* (how the correct answer set is marked) — is captured during Plan 5 with Playwright.
 
-## Hybrid engine (ADR 0002)
+## Confirmed structure (spike 2026-07-04, ADR 0002)
+
+- **No API.** Django SSR; no JSON endpoint (per-question route 404s).
+- **Question = numeric ID + image and/or audio + numbered checkbox answers.** The prompt/answer *meaning* is in the image (`.png`) and/or audio (`.mp3`); on-page answers are **2–4 checkboxes (multi-select)** with DB IDs. Types vary: image-only (146), image+audio (565), audio-only (800).
+- **Media is PUBLIC** (no auth): `/media/uploads/questions/{images|son}/{fr|ar}/{id}.{png|mp3}`, per language. IDs are sparse.
+- **Correct answers are NOT in the DOM** — revealed only by completing the exam (submit each with "Valider", then the correction).
+- **Enumeration:** no deterministic listing (chapter links are broken Django regex). Only path = **Examen Blanc** (`/quizexamenblanc/take/`): 1 random question/load, 40/exam, "Valider" POSTs to advance. Harvest via **loop-until-dry** (repeat exams, dedup by question ID).
+- **PWA service worker** serves an offline fallback under bursty requests → run Playwright with **service workers disabled**.
+
+## Hybrid engine (ADR 0002) — Playwright-primary
 
 | Concern | Adapter (`Layer`) | Why |
 |---|---|---|
-| Login, session capture, JS-built links, answer-revealing interactions | **Playwright** (real Chromium) | handles auth, flaky TLS, and *submitting a quiz to reveal correct answers* if not in raw HTML |
-| Bulk page + image fetches | **HTTP** (got + cheerio) with the captured cookie | fast, light; most pages are static HTML |
+| Login, drive the Examen-Blanc loop, submit + parse the **correction** | **Playwright** (real Chromium, SW disabled) | only way to enumerate + reveal correct answers |
+| Fetch each question's image + audio (fr + ar) by ID | **HTTP** (got) — **no session** | media is public; cheap and cacheable |
 
-Playwright authenticates once and hands the session cookie to the HTTP adapter. Both `Layer`s implement the same `SourceGateway` Tag. Runs on **Node** (Playwright + Testcontainers are Node-first).
-
-## The pivotal unknown — resolve it FIRST (spike)
-
-**Are correct answers present in the page HTML, or only revealed after submitting a quiz?** This decides scraper complexity, and it is **still open**:
-- answers in the DOM → HTTP bulk is enough.
-- not → Playwright simulates a submission per quiz and reads the result page.
-
-Record the finding + the real selectors in `docs/adr/0002`, then replace the placeholder selectors here.
+Playwright authenticates (via `.env` creds) and enumerates; the HTTP adapter fetches media anonymously. Both `Layer`s implement the same `SourceGateway` Tag. Runs on **Node**. Upsert into Postgres keyed on the **NARSA numeric question ID** (stable identity).
 
 ## The SourceGateway port
 
@@ -66,54 +67,60 @@ Fixture tests prove the parser is correct against *known* HTML. A separate **opt
 - Lives outside the default suite (e.g. `pnpm --filter scraper drift`), runs manually or nightly in CI.
 - **Designed to fail loudly.** A red drift test means "re-record fixtures and re-scrape," not "the build is broken."
 
-## Example — normalization is pure, driven by fixtures (selectors are PLACEHOLDERS)
+## Example — parse one exam question, pure, driven by fixtures
 
 ```ts
-// apps/scraper/src/domain/normalize-question.ts
-// PURE: input is captured bytes; output is a decoded domain entity. No I/O. Failure is typed.
-// NOTE: [data-question-text]/[data-answer]/[data-correct] are UNVERIFIED placeholders — confirm via the spike.
-import { Effect, Schema } from 'effect';
-import { Question } from '@perminou/domain';
+// apps/scraper/src/domain/parse-exam-question.ts
+// PURE: input is a captured exam-question HTML page; output is the question WITHOUT correctness
+// (the correct answer set comes from the correction step, added later). No I/O; failure is typed.
+import { Effect } from 'effect';
 import * as cheerio from 'cheerio';
 
-export const normalizeQuestion = (page: RawPage) =>
+export const parseExamQuestion = (page: RawPage) =>
   Effect.gen(function* () {
     const $ = cheerio.load(page.html);
-    const text = $('[data-question-text]').text().trim();   // placeholder selector
-    if (!text) {
-      return yield* Effect.fail(
-        new ScrapeShapeError({ url: page.url, reason: 'missing question text', htmlSnippet: page.html.slice(0, 400) }),
-      );
+    const imgSrc = $('img[src*="/media/uploads/questions/images"]').attr('src');
+    const sonSrc = $('audio source[src*="/son/"], audio[src*="/son/"]').attr('src');
+    const id = imgSrc?.match(/\/(\d+)\.png/)?.[1] ?? sonSrc?.match(/\/(\d+)\.mp3/)?.[1];
+    if (!id) {
+      return yield* Effect.fail(new ScrapeShapeError({
+        url: page.url, reason: 'no question id in media urls', htmlSnippet: page.html.slice(0, 400),
+      }));
     }
-    const answers = $('[data-answer]').map((_, el) => ({    // placeholder selectors
-      label: $(el).text().trim(),
-      correct: $(el).attr('data-correct') === 'true',
-    })).get();
-
-    return yield* Schema.decodeUnknown(Question)({          // validate at the boundary
-      sourceUrl: page.url, text, answers,
-      lang: page.url.includes('/ar/') ? 'ar' : 'fr',
-    });
+    const lang = page.url.includes('/ar/') ? 'ar' : 'fr';
+    const answerIds = $('input[name=answers]').map((_, el) => $(el).attr('value')).get();
+    return {
+      id: Number(id),
+      lang,
+      imageUrl: imgSrc ? `/media/uploads/questions/images/${lang}/${id}.png` : undefined,
+      soundUrl: sonSrc ? `/media/uploads/questions/son/${lang}/${id}.mp3` : undefined,
+      answerIds,          // e.g. ['933','934','935','936'] — correctness resolved from the correction
+    };
   });
 ```
 
 ```ts
-// apps/scraper/test/normalize-question.test.ts (Vitest)
+// apps/scraper/test/parse-exam-question.test.ts (Vitest)
 import { Effect } from 'effect';
 import { readFileSync } from 'node:fs';
 
-test('extracts a fr question + correct answer from recorded HTML', async () => {
-  const page = { url: 'https://.../fr/quiz/12', html: readFileSync('fixtures/quiz-12-fr.html', 'utf8') };
-  const q = await Effect.runPromise(normalizeQuestion(page));
-  expect(q.answers.filter((a) => a.correct)).toHaveLength(1);
+test('extracts id + answer option ids from a recorded exam question', async () => {
+  const page = { url: 'https://.../quizexamenblanc/take/', html: readFileSync('fixtures/exam-q565-fr.html', 'utf8') };
+  const q = await Effect.runPromise(parseExamQuestion(page));
+  expect(q.id).toBe(565);
+  expect(q.answerIds).toHaveLength(4);
+  expect(q.soundUrl).toContain('/son/fr/565.mp3');
 });
 ```
 
 ## Common mistakes
 
 - **Hitting the live site from a unit test.** Provide `SourceGatewayFixture`. Only the drift test touches the network.
-- **Trusting the placeholder selectors.** Run the spike; record real selectors in ADR 0002; then update this skill.
-- **Swallowing parse failures.** A missing selector must fail with `ScrapeShapeError`, not produce a half-question.
+- **Looking for question text in the DOM.** There is none — the prompt is in the image/audio. Parse the question **id** from the media URL and the **answer option IDs** from the checkboxes.
+- **Expecting correctness in the question HTML.** It's not there — resolve it from the correction after completing the exam.
+- **Leaving the service worker enabled.** Bursty requests trip the PWA offline fallback; launch the Playwright context with service workers disabled.
+- **Fetching media through the session.** Media is public — fetch anonymously over HTTP (fr + ar).
+- **Swallowing parse failures.** A missing id must fail with `ScrapeShapeError`, not produce a half-question.
 - **Unbounded concurrency / hand-rolled retry loops.** Use `Effect.forEach({ concurrency })` + `Schedule`. Be gentle.
 - **Leaking Playwright resources.** Acquire with `acquireRelease`/`Scope`.
 - **Non-idempotent writes.** Upsert by stable source key; a re-run must not duplicate rows.
