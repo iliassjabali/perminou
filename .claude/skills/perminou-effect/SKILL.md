@@ -23,22 +23,22 @@ Perminou is **all-in on Effect** (no NestJS). Effect isn't just a library here �
 
 ```ts
 // PORT — interface + typed handle. Lives in domain/application. Depends on nothing concrete.
-export class DatasetRepository extends Context.Tag('DatasetRepository')<
-  DatasetRepository,
-  { readonly findLatest: () => Effect.Effect<DatasetVersion | null, DbError> }
+export class QuestionRepository extends Context.Tag('QuestionRepository')<
+  QuestionRepository,
+  { readonly questionsForChapter: (id: ChapterId) => Effect.Effect<Question[], DbError> }
 >() {}
 
 // ADAPTERS — different Layers, same Tag. Swap by providing a different Layer.
-export const DatasetRepositoryLive = Layer.effect(
-  DatasetRepository,
+export const QuestionRepositoryLive = Layer.effect(
+  QuestionRepository,
   Effect.gen(function* () {
     const sql = yield* PgClient;                    // depends on another port
-    return { findLatest: () => /* real query, returns Effect */ };
+    return { questionsForChapter: (id) => /* real Drizzle query, returns Effect */ };
   }),
 );
-export const DatasetRepositoryTest = Layer.succeed(
-  DatasetRepository,
-  { findLatest: () => Effect.succeed(fakeVersion) },
+export const QuestionRepositoryTest = Layer.succeed(
+  QuestionRepository,
+  { questionsForChapter: () => Effect.succeed(fakeQuestions) },
 );
 ```
 
@@ -104,16 +104,18 @@ The tRPC router is a **thin inbound adapter**. It runs an Effect use-case throug
 ```ts
 const runtime = ManagedRuntime.make(MainLayer);   // MainLayer provides every port
 
-export const datasetRouter = t.router({
-  getManifest: t.procedure.query(() =>
-    runtime.runPromise(
-      resolveLatestDataset.pipe(
-        Effect.catchTag('NoDatasetPublished', () =>
-          Effect.fail(new TRPCError({ code: 'NOT_FOUND' })),
+export const catalogRouter = t.router({
+  chapterQuestions: t.procedure
+    .input(Schema.standardSchemaV1(ChapterIdSchema))   // Effect Schema as tRPC validator
+    .query(({ input }) =>
+      runtime.runPromise(
+        getChapterQuestions(input).pipe(
+          Effect.catchTag('ChapterNotFound', () =>
+            Effect.fail(new TRPCError({ code: 'NOT_FOUND' })),
+          ),
         ),
       ),
     ),
-  ),
 });
 ```
 

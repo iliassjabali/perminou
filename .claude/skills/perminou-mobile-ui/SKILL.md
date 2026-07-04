@@ -1,45 +1,69 @@
 ---
 name: perminou-mobile-ui
-description: Use when building or reviewing the Perminou Expo mobile app — screens, quiz/exam UI, styling with NativeWind (Tailwind for RN), components with React Native Reusables (shadcn-for-RN), the offline-first expo-sqlite dataset, media caching, the tRPC sync client, dataset bundle download/swap, and EAS Update. Applies to anything under apps/mobile.
+description: Use when building or reviewing the Perminou Expo mobile app — screens, quiz/exam UI, styling with NativeWind (Tailwind for RN), components with React Native Reusables (shadcn-for-RN), the tRPC + react-query data layer, persisted cache for offline capability, first-launch prefetch, and image caching with expo-image. Applies to anything under apps/mobile.
 ---
 
 # Perminou Mobile UI
 
 ## Overview
 
-`apps/mobile` is an **Expo** app, **Android-first** (the Moroccan market), **offline-first**. It ships with a baseline dataset, runs 100% offline against a local **expo-sqlite** copy, and pulls newer dataset versions when online.
+`apps/mobile` is an **Expo** app, **Android-first** (the Moroccan market). It's **online** — it fetches the question bank live from the backend via **tRPC + `@tanstack/react-query`** — but it **persists its react-query cache** so anything already loaded stays usable with no signal, and it **prefetches the bank on first launch** so it *behaves* offline-first.
 
-**UI stack:** **NativeWind** (Tailwind CSS for React Native) + **React Native Reusables (RNR)** — the shadcn/ui port for RN. Same copy-paste, you-own-the-code model as shadcn: components live in `components/ui/`, you edit them freely. This mirrors the web `shadcn` workflow 1:1.
+**Not offline-first:** no bundled dataset, no on-device SQLite, no sync engine. Offline capability = **cache**.
 
-**Core principle:** the network is optional. Everything the user does reads from local SQLite; sync only *replaces* the local dataset with a newer immutable version. A user on the metro with no signal has the full app.
+**UI stack:** **NativeWind** (Tailwind for RN) + **React Native Reusables (RNR)** — the shadcn/ui port for RN. Copy-paste, you-own-the-code: components live in `components/ui/`, edit freely. Mirrors the web `shadcn` workflow 1:1.
 
-## Offline data flow (control-plane vs data-plane)
+## Offline-via-cache — how it works
 
-```
-trpc.dataset.getManifest()  ──►  { version, checksum, bundleUrl }   [tRPC, tiny]
-        │ newer than local?
-        ▼
-  fetch(bundleUrl)  ──►  verify checksum  ──►  swap local expo-sqlite db + media  [plain HTTP/CDN, large]
-```
+| Layer | Mechanism |
+|---|---|
+| JSON data (questions, choices, answers, exams) | react-query cache, **persisted** to **MMKV** (`persistQueryClient` + a MMKV persister) with a long `gcTime` |
+| Images | **`expo-image`** automatic disk cache (referenced by URL from the backend) |
+| First-run offline | **prefetch** the catalog on first online launch (`queryClient.prefetchQuery` per chapter) to warm the persisted cache |
 
-The bundle (SQLite + media) is **never** streamed through tRPC — a tRPC call returns its URL, the app downloads it directly. See `perminou-architecture` (two-plane rule).
+Set `staleTime` high (the bank changes rarely) so cached content is served instantly and refetched in the background when online.
 
 ## Ports (lighter hexagonal on mobile)
 
 | Port | Real adapter | Test adapter |
 |---|---|---|
-| `LocalDatasetStore` | expo-sqlite (via **`drizzle-orm/expo-sqlite`**, same `sqliteTable` schema the scraper writes) | in-memory sqlite |
-| `SyncClient` | tRPC client (typed by `AppRouter`) | fake caller |
+| `SyncClient` | tRPC client (typed by `AppRouter`), wrapped by react-query hooks | fake caller |
 
 The tRPC client is typed by importing `AppRouter` from `packages/api-contract` — **a server/client mismatch is a compile error**, no runtime contract test needed.
 
 ## Setup essentials
 
-- `nativewind` + `tailwindcss`, `metro.config.js` wired for NativeWind, `tailwind.config.js` content globs include `app/**` and `components/**`.
+- `nativewind` + `tailwindcss`, `metro.config.js` wired for NativeWind, `tailwind.config.js` content globs cover `app/**` + `components/**`.
 - RNR components added via its CLI into `components/ui/` (copy-paste, owned).
-- `expo-sqlite` for the dataset; `expo-file-system` for cached media; `expo-updates` / **EAS Update** for OTA JS pushes (ship logic without a store review — critical when the scraped source shifts).
+- `@trpc/client` + `@trpc/react-query` + `@tanstack/react-query`.
+- `@tanstack/react-query-persist-client` + a **MMKV** persister (`react-native-mmkv`) — faster and higher-capacity than AsyncStorage for the persisted cache.
+- `expo-image` for images (disk cache out of the box).
 
-## Example — a quiz answer card (NativeWind + RNR), reading from local SQLite
+## Example — persisted query client (offline-capable cache)
+
+```ts
+// apps/mobile/lib/query.ts
+import { QueryClient } from '@tanstack/react-query';
+import { persistQueryClient } from '@tanstack/react-query-persist-client';
+import { MMKV } from 'react-native-mmkv';
+
+const storage = new MMKV();
+export const queryClient = new QueryClient({
+  defaultOptions: { queries: { staleTime: 1000 * 60 * 60 * 24, gcTime: Infinity, retry: 2 } },
+});
+
+persistQueryClient({
+  queryClient,
+  persister: {
+    persistClient: (c) => storage.set('rq-cache', JSON.stringify(c)),
+    restoreClient: () => { const s = storage.getString('rq-cache'); return s ? JSON.parse(s) : undefined; },
+    removeClient: () => storage.delete('rq-cache'),
+  },
+  maxAge: Infinity,   // the bank rarely changes; keep the offline cache indefinitely
+});
+```
+
+## Example — a quiz answer card (NativeWind + RNR), data from a cached query
 
 ```tsx
 // apps/mobile/components/quiz/answer-option.tsx
@@ -47,9 +71,7 @@ import { Pressable, Text } from 'react-native';
 import { cn } from '~/lib/utils';           // RNR's className merge helper
 
 export function AnswerOption({ label, state, onPress }: {
-  label: string;
-  state: 'idle' | 'correct' | 'wrong';
-  onPress: () => void;
+  label: string; state: 'idle' | 'correct' | 'wrong'; onPress: () => void;
 }) {
   return (
     <Pressable
@@ -67,44 +89,23 @@ export function AnswerOption({ label, state, onPress }: {
 }
 ```
 
-```ts
-// apps/mobile/features/quiz/load-quiz.ts — reads LOCAL db, works offline
-export async function loadQuiz(store: LocalDatasetStore, chapterId: string): Promise<Question[]> {
-  return store.query<Question>(
-    'select * from questions where chapter_id = ? order by ordinal',
-    [chapterId],
-  );
-}
-```
-
-## Example — sync: pull a newer dataset version, then swap
-
-```ts
-// apps/mobile/features/sync/sync-dataset.ts
-export async function syncDataset(sync: SyncClient, store: LocalDatasetStore) {
-  const manifest = await sync.getManifest();               // tRPC, tiny
-  if (manifest.version <= store.currentVersion()) return;  // already current → stay offline
-
-  const bundle = await fetch(manifest.bundleUrl);          // plain HTTP/CDN, large
-  const bytes = new Uint8Array(await bundle.arrayBuffer());
-  if (!(await checksumMatches(bytes, manifest.checksum))) throw new Error('bundle checksum mismatch');
-
-  await store.installVersion(manifest.version, bytes);     // atomic swap of the local db
-}
+```tsx
+// reading questions — served from the persisted cache instantly, refetched in background when online
+const { data: questions, isLoading } = trpc.chapterQuestions.useQuery({ chapterId });
 ```
 
 ## Common mistakes
 
-- **Fetching questions over the network at read time.** Always read from local SQLite; the network only *updates* the dataset.
-- **Streaming the bundle through tRPC.** Use the returned `bundleUrl` with plain `fetch`.
-- **Skipping checksum verification** before swapping the local db. A corrupt download must not replace a good dataset.
-- **Non-atomic dataset swap.** Install to a temp db, verify, then swap — never leave a half-written db if the app is killed mid-install.
+- **Treating this as offline-first with a bundle/DB.** It's online + persisted cache. Don't add expo-sqlite or a dataset bundle without an ADR.
+- **Forgetting to persist the cache.** Without `persistQueryClient` + MMKV, closing the app loses everything and there's no offline.
+- **No first-launch prefetch.** Without warming the cache online, a brand-new user with no signal sees nothing. Prefetch the catalog on first successful launch.
+- **Low `staleTime`.** The bank rarely changes — high `staleTime` gives instant reads and avoids needless refetches.
 - **Inline styles instead of NativeWind classes.** Use `className`; keep tokens (`bg-card`, `text-card-foreground`) consistent with the RNR theme.
-- **Treating RNR components as a locked dependency.** They're copy-pasted into `components/ui/` — edit them; that's the point.
+- **Treating RNR components as a locked dependency.** They're copy-pasted into `components/ui/` — edit them.
 - **Forgetting `/ar/` layout.** Content is bilingual; support RTL for Arabic.
 
 ## Related skills
 
-- `perminou-architecture` — two-plane rule + the `AppRouter` contract
+- `perminou-architecture` — the online API + the `AppRouter` contract
 - `perminou-testing` — mobile logic tests + compile-time contract
 - Global: `typescript-best-practices`; web `shadcn` skill for the mental model

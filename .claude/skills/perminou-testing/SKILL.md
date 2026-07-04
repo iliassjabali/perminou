@@ -21,7 +21,7 @@ description: Use when writing or reviewing any test in the Perminou monorepo, ch
 | `apps/backend` | domain + use-cases | pure Vitest, provide fake port `Layer`s | no |
 | `apps/backend` | repo/storage adapters | **Testcontainers Postgres** + migrations | ephemeral DB |
 | `apps/backend` | tRPC router | `createCaller` contract test | ephemeral DB |
-| `apps/mobile` | logic/hooks, offline store | Vitest + RN Testing Library, in-memory sqlite | no |
+| `apps/mobile` | logic/hooks, cached queries | Vitest + RN Testing Library, mocked tRPC + react-query | no |
 | `apps/mobile` | server contract | **compile-time** via shared `AppRouter` type | n/a |
 
 ## The one rule that matters most
