@@ -48,11 +48,13 @@ apps/
 
 ## Getting started
 
-**Prerequisites:** Node ≥ 24, pnpm ≥ 9, Docker (for the Postgres integration tests).
+**Prerequisites:** Node ≥ 24, pnpm ≥ 9, Docker (for local Postgres + the integration tests).
 
 ```bash
 pnpm install
-pnpm test          # Vitest across the monorepo (never touches live NARSA)
+cp .env.example .env
+docker compose up -d db   # local Postgres for dev + migrations (tests use their own ephemeral DB)
+pnpm test                 # Vitest across the monorepo (never touches live NARSA)
 pnpm typecheck
 ```
 

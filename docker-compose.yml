@@ -1,0 +1,28 @@
+# Local dev Postgres for Perminou.
+#   docker compose up -d db      # start
+#   docker compose down          # stop (keeps data)
+#   docker compose down -v       # stop + wipe data
+# Note: the Vitest integration tests (Plan 1 Tasks 4-5) spin up their OWN ephemeral
+# Postgres via Testcontainers — they do NOT use this compose. This is for local dev,
+# running migrations (`pnpm --filter db migrate`), and the backend against real data.
+services:
+  db:
+    image: postgres:16
+    container_name: perminou-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: perminou
+      POSTGRES_PASSWORD: perminou       # local dev only — never a real secret
+      POSTGRES_DB: perminou
+    ports:
+      - "5432:5432"
+    volumes:
+      - perminou_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U perminou -d perminou"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  perminou_pgdata:
