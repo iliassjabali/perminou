@@ -8,7 +8,7 @@ A **mobile app for practicing the Moroccan driving-license theory exam** (*code 
 
 **Not offline-first** (no bundled dataset, no on-device DB, no sync). It's **online with an offline-capable cache**: react-query persistence + a first-launch prefetch make it *behave* offline-first while staying a live API app.
 
-> Status: greenfield. The monorepo below is the target structure; scaffold it before implementing. Decisions are recorded in `docs/adr/`.
+> Status: **built** — the full stack runs locally (scraper → 385 questions in Postgres → `@effect/rpc` backend → Expo Tinder app). See `README.md` "Run the full stack" and **`docs/STATUS.md`** for the complete build journey, decisions, and known follow-ups. Decisions are in `docs/adr/` (0001–0008).
 
 ## Stack (decided)
 
@@ -45,19 +45,22 @@ docs/adr/        # architecture decision records
 3. **Scraper is gentle & resilient.** Bounded concurrency + backoff (`Schedule`), resource-safe browsers (`Scope`), resumable/idempotent, fail-loud typed errors, **survives session expiry** (re-auth on redirect-to-signin).
 4. **Offline capability = cache, not bundle.** The app is online; react-query persistence + a first-launch prefetch provide offline use of already-fetched content. Do not reintroduce an on-device dataset/bundle without an ADR.
 5. **Scaffold, don't hand-write boilerplate.** Before creating a new backend feature, domain entity, or mobile screen, run `pnpm plop` (see `perminou-scaffolding`). Hand-writing the file-shape is the exception. The only code you write by hand is the logic that fills the generated `// TODO`s.
-6. **Open question to resolve first:** are quiz answers in the DOM or only revealed after submitting? Decides scraper complexity — spike before building (ADR 0002). Any HTML selectors in the skills are **unverified examples** until the spike confirms them.
+6. **Correct answers are revealed by the exam correction, marked by 1-based INDEX** (not the answer's DB id) — spike resolved, ADR 0002 finalized. Question ids can be alphanumeric (signage sub-bank) so `QuestionId` is a string. Media is public.
 
-## Commands (target — adjust as scaffolding lands)
+## Commands
 
 ```
 pnpm install
-pnpm dev                      # turbo: run app/backend dev
 pnpm test                     # vitest across the monorepo (NEVER touches live NARSA)
-pnpm --filter scraper drift   # opt-in drift test against the live site (allowed to fail loud)
-pnpm --filter scraper scrape  # run the scrape → write into Postgres
-pnpm --filter db migrate      # drizzle-kit migrations
-pnpm --filter mobile start    # Expo dev server
-pnpm plop <feature|entity|screen>  # scaffold boilerplate (see perminou-scaffolding)
+pnpm typecheck                # turbo tsc --noEmit, all packages
+docker compose up -d db       # local Postgres
+pnpm --filter @perminou/scraper db:migrate   # apply Drizzle migrations
+docker exec -i perminou-db psql -U perminou -d perminou < packages/db/seed/perminou-questions.sql  # seed 385 Qs
+pnpm --filter @perminou/backend dev          # @effect/rpc API on :3000 (health + /rpc + CORS)
+pnpm --filter mobile start    # Expo — web http://localhost:8081 · phone exp://<lan-ip>:8081 (set apps/mobile/.env EXPO_PUBLIC_API_URL=http://<lan-ip>:3000)
+pnpm --filter @perminou/scraper scrape   # re-harvest into Postgres (needs NARSA creds in .env)
+pnpm --filter @perminou/scraper drift    # opt-in live drift test (allowed to fail loud)
+pnpm plop <feature|entity|screen>        # scaffold boilerplate (see perminou-scaffolding)
 ```
 
 ## Skills for this repo (`.claude/skills/`)

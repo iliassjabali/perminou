@@ -3,6 +3,7 @@ import * as HttpApp from '@effect/platform/HttpApp';
 import * as RpcServer from '@effect/rpc/RpcServer';
 import * as RpcSerialization from '@effect/rpc/RpcSerialization';
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 import { ExamRpcs } from '@perminou/rpc-contract';
 import { type QuestionRepository as QuestionRepositoryTag } from '@perminou/domain';
 import { ExamHandlersLive } from './adapters/inbound/exam.handlers';
@@ -29,6 +30,7 @@ export function makeApp<E>(questionRepositoryLayer: Layer.Layer<QuestionReposito
   });
 
   const app = new Hono();
+  app.use('*', cors());
   app.get('/health', (c) => c.json({ status: 'ok' }));
   app.post('/rpc', (c) => handler(c.req.raw));
 

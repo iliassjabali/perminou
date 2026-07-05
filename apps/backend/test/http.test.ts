@@ -17,3 +17,13 @@ test('GET /health returns 200 with {status: "ok"}', async () => {
   expect(res.status).toBe(200);
   expect(await res.json()).toEqual({ status: 'ok' });
 });
+
+test('CORS: OPTIONS /rpc preflight is allowed for a browser origin', async () => {
+  const { app } = makeApp(QuestionRepositoryTest);
+  const res = await app.request('/rpc', {
+    method: 'OPTIONS',
+    headers: { Origin: 'http://localhost:8081', 'Access-Control-Request-Method': 'POST' },
+  });
+  // The web client (served from a different origin) must be allowed to call /rpc.
+  expect(res.headers.get('access-control-allow-origin')).toBe('*');
+});

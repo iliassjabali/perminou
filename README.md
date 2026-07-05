@@ -1,90 +1,85 @@
 # Perminou
 
-A mobile app for practicing the **Moroccan driving-license theory exam** (*code de la route*). A scraper harvests NARSA's official question bank ([`perminou.narsa.gov.ma`](https://perminou.narsa.gov.ma)) into Postgres; a typed API serves it; an Expo app fetches it live and **persists its cache** so already-loaded content works offline.
+An **audio-first "Tinder for questions"** app to practice the Moroccan driving-license theory exam (*code de la route*). A scraper harvested NARSA's official bank — **385 questions, 1,049 answers, 100% audio** — into Postgres; an Effect/Hono `@effect/rpc` backend serves it; an Expo app presents it as a **swipeable deck**: each card auto-plays the spoken question, shows the image + numbered answers, tap + **Valider** to reveal green/red, **swipe right = got-it / left = review**. Practice · scored Mock-Exam · Review · **fr/العربية** toggle.
 
-> **Personal-use project.** Not affiliated with NARSA; no public redistribution of its content.
+> Personal-use project. Not affiliated with NARSA. Media is fetched from NARSA's public host.
 
-## Overview
-
-- **Online with an offline-capable cache** — not offline-first. The app is live (typed RPC) but persists its react-query cache (MMKV) and prefetches on first launch, so it *behaves* offline-first without a bundle or on-device DB. ([ADR 0003](docs/adr/0003-online-first-cached.md))
-- **All-in [Effect](https://effect.website)** — Effect implements hexagonal architecture: ports are `Context.Tag`, adapters are `Layer`, and the `R` channel makes the dependency rule a compile error. No NestJS. ([ADR 0005](docs/adr/0005-all-in-effect.md))
-- **`@effect/rpc` + a custom `rpc-react`** — typed errors end-to-end, wrapped in an owned library that gives a one-import, tRPC-style `api` proxy. No tRPC. ([ADR 0007](docs/adr/0007-effect-rpc-custom-rpc-react.md))
+## The whole thing, end to end
 
 ```
-NARSA HTML ──scraper (Playwright+HTTP)──► Postgres ──backend (@effect/rpc over Hono)──► Expo app
-                                                                                         │
-                                              rpc-react (typed api proxy + react-query) ─┤ MMKV persisted cache
-                                              expo-image ──────────────────────────────── ┘ image disk cache
+NARSA (Django, session-auth)
+   │  scraper (Playwright loop-until-dry, gentle, resilient)
+   ▼
+Postgres  ── 385 questions + answers (correct = 1-based index)  [seed: packages/db/seed]
+   │  @effect/rpc backend over Hono (GET /health, POST /rpc)
+   ▼
+rpc-react  ── typed `api` proxy over @effect/rpc client + react-query + MMKV persisted cache
+   │
+   ▼
+Expo app (NativeWind) ── Home → Practice / Mock Exam / Review, swipe deck, audio-first, fr/ar
 ```
 
-## Monorepo layout
+## Monorepo
 
 ```
 packages/
-  domain/        # entities + Effect Schema + ports (Tags). Pure — no I/O.        [built]
-  db/            # shared Drizzle pgTable schema + migrations (scraper↔backend)    [built]
-  rpc-contract/  # @effect/rpc RpcGroup defs (Effect Schema) — shared server+client [pending]
-  rpc-react/     # custom lib: typed `api` proxy (react-query) over the client      [pending]
+  domain/        Effect Schema entities + ports (Tags). Pure.
+  db/            Drizzle pgTable schema + migrations + QuestionRepository (Postgres). + seed/ (data dump)
+  rpc-contract/  @effect/rpc RpcGroup (ExamRpcs) + QuestionWire — shared server+client
+  rpc-react/     custom lib: typed `api` proxy (react-query) + MMKV persisted cache (+ /native Expo preset)
 apps/
-  scraper/       # hybrid Playwright + HTTP crawler → writes the bank into Postgres [pending]
-  backend/       # Effect + Hono; serves @effect/rpc handlers from Postgres         [pending]
-  mobile/        # Expo online app; persisted react-query cache = offline           [pending]
+  scraper/       Playwright + HTTP harvester → Postgres; opt-in live drift test
+  backend/       Effect + Hono @effect/rpc API (GetExam / GetAllQuestions + health + CORS)
+  mobile/        Expo Tinder deck (gesture-handler + reanimated, expo-audio, native-stack nav)
+docs/adr/        8 ADRs · docs/superpowers/{specs,plans} · .claude/skills/ (perminou-*)
 ```
 
 ## Tech stack
 
-| Concern | Choice | ADR |
-|---|---|---|
-| Monorepo | pnpm + Turborepo | [0001](docs/adr/0001-monorepo-pnpm-turborepo.md) |
-| Paradigm | all-in Effect (no NestJS) | [0005](docs/adr/0005-all-in-effect.md) |
-| Runtime | Node 24 (no Bun) | [0008](docs/adr/0008-hono-node-runtime.md) |
-| HTTP host | Hono | [0008](docs/adr/0008-hono-node-runtime.md) |
-| API / client | `@effect/rpc` + custom `rpc-react` (react-query) | [0007](docs/adr/0007-effect-rpc-custom-rpc-react.md) |
-| Validation | Effect Schema | — |
-| ORM | Drizzle + `@effect/sql-drizzle` (Postgres) | [0006](docs/adr/0006-drizzle-effect-sql.md) |
-| Scraper | Playwright (auth) + HTTP bulk | [0002](docs/adr/0002-hybrid-scraping-engine.md) |
-| Mobile | Expo + NativeWind + React Native Reusables | [0004](docs/adr/0004-expo-nativewind-rnr.md) |
-| Tests | Vitest + Testcontainers | — |
+All-in **Effect** (domain + scraper + backend) on **Node** · **@effect/rpc** over **Hono** · **Drizzle**/Postgres (`@effect/sql-drizzle`) · **Expo + NativeWind + gesture-handler/reanimated** · custom **rpc-react** (react-query + MMKV) · **Vitest** + Testcontainers · **pnpm + Turborepo**. See `docs/adr/` (0001–0008) for the decisions and rejected alternatives.
 
-## Getting started
+## Run the full stack locally
 
-**Prerequisites:** Node ≥ 24, pnpm ≥ 9, Docker (for local Postgres + the integration tests).
+**Prereqs:** Node ≥ 24, pnpm ≥ 9, Docker, Expo Go (for phone/audio).
 
 ```bash
 pnpm install
-cp .env.example .env
-docker compose up -d db   # local Postgres for dev + migrations (tests use their own ephemeral DB)
-pnpm test                 # Vitest across the monorepo (never touches live NARSA)
-pnpm typecheck
+cp .env.example .env                        # set NARSA_USERNAME/PASSWORD only if you plan to re-scrape
+
+# 1. Database (with the seeded 385 questions — no scrape needed)
+docker compose up -d db
+pnpm --filter @perminou/scraper db:migrate
+docker exec -i perminou-db psql -U perminou -d perminou < packages/db/seed/perminou-questions.sql
+
+# 2. Backend API (:3000)
+pnpm --filter @perminou/backend dev
+
+# 3. App — set the API URL to your Mac's LAN IP, then start Expo
+echo "EXPO_PUBLIC_API_URL=http://<your-lan-ip>:3000" > apps/mobile/.env
+pnpm --filter mobile start
+#   • Web:   http://localhost:8081  (visual UX; audio limited in-browser)
+#   • Phone: Expo Go → exp://<your-lan-ip>:8081  (full audio)
 ```
 
-### Scaffolding (write less boilerplate)
-
-Every feature has the same file-shape, so generate it — don't hand-write it ([`perminou-scaffolding`](.claude/skills/perminou-scaffolding/SKILL.md)):
-
-```bash
-pnpm plop feature   # backend slice: @effect/rpc def + Effect use-case + handler + failing test
-pnpm plop entity    # domain Effect-Schema entity + failing test
-pnpm plop screen    # Expo screen wired to the api proxy
-```
-
-You fill only the logic; the file-shape, imports, and export-wiring are generated.
+Re-harvest the bank (needs your NARSA creds in `.env`): `pnpm --filter @perminou/scraper scrape`.
 
 ## Status
 
 | Area | State |
 |---|---|
-| Monorepo scaffold, `packages/domain` (entities, ports) | ✅ built, tested |
-| plop generators | ✅ ready |
-| `packages/db` (Postgres schema + `QuestionRepository`) | ✅ built, tested (Testcontainers) |
-| `apps/mobile` prototype (static samples, real media) | ✅ runnable demo (`cd apps/mobile && npx expo start`) |
-| Scraper | 🔜 Plan 5 — spike complete, [ADR 0002](docs/adr/0002-hybrid-scraping-engine.md) finalized |
-| Backend / rpc-react / real mobile app | 🔜 planned |
+| `packages/domain`, `db` (schema + repo) | ✅ built, tested (Testcontainers) |
+| `apps/scraper` — harvested the full bank | ✅ 385 questions in Postgres + committed seed |
+| `apps/backend` — `@effect/rpc` API + CORS | ✅ built, tested (real HTTP round-trip) |
+| `packages/rpc-contract`, `rpc-react` | ✅ built; `@effect/rpc` client bundles on Metro/Hermes |
+| `apps/mobile` — Tinder deck (Practice/Exam/Review, fr/ar) | ✅ built, bundles clean |
+| 100+ tests, typecheck 7/7 | ✅ green |
+
+**Known follow-ups:** on-device runtime confirmation (Hermes `TextEncoder` polyfill, audio); deeper card-level RTL (Home is RTL); mock-exam exhaustion edge case; backend readiness probe + graceful shutdown; align the split `@effect/platform` versions; a web `localStorage` fallback if MMKV ever misbehaves in-browser.
 
 ## Documentation
 
+- **[docs/STATUS.md](docs/STATUS.md)** — full build journey, decisions, pivots, and current state (the context).
 - **[CLAUDE.md](CLAUDE.md)** — working agreement, stack, rules, commands.
-- **[docs/adr/](docs/adr/)** — architecture decision records (0001–0008), each with alternatives rejected.
-- **[docs/superpowers/specs/](docs/superpowers/specs/)** — the design spec.
-- **[docs/superpowers/plans/](docs/superpowers/plans/)** — TDD implementation plans.
-- **[.claude/skills/](.claude/skills/)** — `perminou-*` skills: architecture, effect, scraping, testing, mobile-ui, scaffolding.
+- **[docs/adr/](docs/adr/)** — 8 ADRs, each with alternatives rejected.
+- **[docs/superpowers/](docs/superpowers/)** — the design spec + the 4 implementation plans.
+- **[.claude/skills/](.claude/skills/)** — `perminou-*` skills (architecture, effect, scraping, testing, mobile-ui, scaffolding).
